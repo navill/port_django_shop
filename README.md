@@ -1,4 +1,4 @@
-# port_django_shop
+# Portfolio: django_shop
 
 ## App 구성
 
