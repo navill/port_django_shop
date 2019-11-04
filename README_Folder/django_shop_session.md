@@ -14,28 +14,18 @@
 
     - 별도의 세션 엔진을 설정하지 않아도 됨 → 프로젝트 생성 시 포함
 
-  - File-based session(
-
-    "django.contrib.sessions.backends.file"
-
-    )
+  - File-based session("django.contrib.sessions.backends.file")
 
     - 세션을 파일 시스템에 저장한다.
 
-  - Cached session(
-
-    "django.contrib.sessions.backends.cache")
+  - Cached session("django.contrib.sessions.backends.cache")
 
     - cache backend에 세션을 저장한다.
     - CACHES 설정을 통해 cache backend를 설정할 수 있다.
     - 가장 높은 성능을 발휘한다.
     - Redis나 다른 cache 시스템을 위한 third-party backend를 이용할 수 있다.
 
-  - Cached database session(
-
-    "django.contrib.sessions.backends.cached_db"
-
-    ):
+  - Cached database session("django.contrib.sessions.backends.cached_db")
 
     - 세션 데이터를 [write-through](http://melonicedlatte.com/computerarchitecture/2019/02/12/203749.html) 방식으로 저장
 
@@ -43,11 +33,7 @@
 
     - 데이터가 캐시에 없을 경우, 데이터베이스에 있는 데이터를 이용한다.(read-only)
 
-  - Cookie-based session(
-
-    "django.contrib.sessions.backends.signed_cookies"
-
-    )
+  - Cookie-based session("django.contrib.sessions.backends.signed_cookies")
 
     - 세션 데이터를 브라우저에 전송할 쿠키에 저장한다.
 
