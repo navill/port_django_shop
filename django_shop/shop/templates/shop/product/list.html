@@ -1,22 +1,22 @@
 {% extends 'shop/base.html' %}
+
 {% load static %}
 {% load humanize %}
-{% block title %}
-{% if category %}
-{{ category.name }}
-{% else %}
-Products
-{% endif %}
 
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Products
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-
 <div class="category-list">
     <h1>{% if category %}
-        {{ category.name }}
+            {{ category.name }}
         {% else %}
-        All Products
+            All Products
         {% endif %}</h1>
     <div id="menu">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
