@@ -1,6 +1,6 @@
 {% extends 'shop/base.html' %}
 {% load static %}
-
+{% load humanize %}
 {% block title %}
 {% if category %}
 {{ category.name }}
@@ -63,7 +63,7 @@ Products
                                             {{ product.name }}
                                         </a>
                                     </p>
-                                    <p class="card-text">${{ product.price }}</p>
+                                    <p class="card-text">{{ product.price|intcomma }}원</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary btn-lg">Cart</button>
