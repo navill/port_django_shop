@@ -1,0 +1,82 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if category %}
+{{ category.name }}
+{% else %}
+Products
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="category-list">
+    <h1>{% if category %}
+        {{ category.name }}
+        {% else %}
+        All Products
+        {% endif %}</h1>
+    <div id="menu">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'shop:product_list' %}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% for cat in categories %}
+                    <li class="nav-item
+                    {% if cat == category %}
+                        active
+                    {% else %}
+                        disabled
+                    {% endif %}">
+                        <a class="nav-link" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="product-list">
+        <main role="main">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% if product.image %}
+                                        {{ product.image.url }}
+                                    {% else %}
+                                        {% static 'img/no_image.png' %}
+                                    {% endif %}" width="348px;" height="225px">
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            {{ product.name }}
+                                        </a>
+                                    </p>
+                                    <p class="card-text">${{ product.price }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg">Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
