@@ -14,8 +14,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['category', 'name', 'price', 'created', 'updated', 'available_stock', 'available']
+    list_display = ['category', 'name', 'price', 'created', 'updated', 'quantity', 'available']
     prepopulated_fields = {'slug': ('name',)}
     # admin에서 사용될 default filter
     list_filter = ['available', 'created', 'updated']
-    list_editable = ['available', 'price', 'available_stock']
+    list_editable = ['available', 'price', 'quantity']

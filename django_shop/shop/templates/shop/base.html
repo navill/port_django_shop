@@ -10,11 +10,10 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-
 </head>
 <body style="text-align:center;">
 <div id="header">
-    <a href="/" class="logo" style="font-size: 30px; color: #4c8a46;">Django shop</a></div>
+    <a href="{% url 'shop:product_list' %}" class="logo" style="font-size: 30px; color: #4c8a46;">Django shop</a></div>
 
 {% block content %}
 {% endblock %}

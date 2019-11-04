@@ -117,3 +117,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# 세션을 이용한 장바구니
+CART_SESSION_ID = 'cart'

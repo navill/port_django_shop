@@ -11,8 +11,10 @@
         <h2><a href=" {{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
         <p class="price">{{ product.price|intcomma }}원</p>
 
-        <form action="#" method="">
-          <input type="submit" value="Add to cart">
+        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+            {{ cart_form }}
+            {% csrf_token %}
+            <input type="submit" value="Add to cart">
         </form>
         <div>
             <p></p>

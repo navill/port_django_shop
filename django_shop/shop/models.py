@@ -27,7 +27,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
 
-    available_stock = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
     available = models.BooleanField(default=True)
 
     created = models.DateTimeField(auto_now_add=True)
