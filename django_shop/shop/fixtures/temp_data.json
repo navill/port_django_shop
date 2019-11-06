@@ -1,0 +1,170 @@
+[
+{
+  "model": "shop.category",
+  "pk": 1,
+  "fields": {
+    "name": "Food",
+    "slug": "food"
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 2,
+  "fields": {
+    "name": "Clothing",
+    "slug": "clothing"
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 3,
+  "fields": {
+    "name": "PC/Notebook",
+    "slug": "pcnotebook"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "Apple",
+    "slug": "apple",
+    "image": "products/2019/11/04/apple_V6VuboV.jpg",
+    "price": 200,
+    "description": "\uad11\uc8fc \uc0ac\uacfc\uc785\ub2c8\ub2e4.",
+    "quantity": 2000,
+    "available": true,
+    "created": "2019-11-04T06:16:45.571Z",
+    "updated": "2019-11-04T09:03:50.371Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Cherry",
+    "slug": "cherry",
+    "image": "products/2019/11/04/cherry.jpg",
+    "price": 250,
+    "description": "\ub9db\uc788\ub294 \uccb4\ub9ac\uc785\ub2c8\ub2e4.",
+    "quantity": 2000,
+    "available": true,
+    "created": "2019-11-04T10:30:33.793Z",
+    "updated": "2019-11-04T10:30:33.793Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "name": "Chocolate",
+    "slug": "chocolate",
+    "image": "products/2019/11/04/chocolate.jpg",
+    "price": 300,
+    "description": "\ub2ec\ub2ec\ud55c \ucd08\ucf5c\ub81b \uc785\ub2c8\ub2e4.",
+    "quantity": 100,
+    "available": true,
+    "created": "2019-11-04T10:31:04.267Z",
+    "updated": "2019-11-04T10:31:04.267Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 4,
+  "fields": {
+    "category": 1,
+    "name": "Orange",
+    "slug": "orange",
+    "image": "products/2019/11/04/orange.jpeg",
+    "price": 220,
+    "description": "\uc0c1\ud07c\ud55c \uc624\ub80c\uc9c0 \uc785\ub2c8\ub2e4.",
+    "quantity": 500,
+    "available": true,
+    "created": "2019-11-04T10:31:31.770Z",
+    "updated": "2019-11-04T10:31:31.770Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 5,
+  "fields": {
+    "category": 1,
+    "name": "Grape",
+    "slug": "grape",
+    "image": "products/2019/11/04/grape.jpg",
+    "price": 200,
+    "description": "\uc2f1\uc2f1\ud55c \ud3ec\ub3c4 \uc785\ub2c8\ub2e4.",
+    "quantity": 3000,
+    "available": true,
+    "created": "2019-11-04T10:31:55.509Z",
+    "updated": "2019-11-04T10:31:55.509Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 6,
+  "fields": {
+    "category": 2,
+    "name": "Blue Jean",
+    "slug": "blue-jean",
+    "image": "products/2019/11/04/blue_jean.jpg",
+    "price": 12000,
+    "description": "\ud54f\uc774 \uc88b\uc740 \uccad\ubc14\uc9c0 \uc785\ub2c8\ub2e4.",
+    "quantity": 30,
+    "available": true,
+    "created": "2019-11-04T10:32:38.809Z",
+    "updated": "2019-11-04T10:32:38.809Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 7,
+  "fields": {
+    "category": 2,
+    "name": "One Piece",
+    "slug": "one-piece",
+    "image": "products/2019/11/04/one_piece.jpg",
+    "price": 20000,
+    "description": "\uc608\uc05c \uc6d0\ud53c\uc2a4 \uc785\ub2c8\ub2e4.",
+    "quantity": 100,
+    "available": true,
+    "created": "2019-11-04T10:33:10.433Z",
+    "updated": "2019-11-04T10:33:10.433Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 8,
+  "fields": {
+    "category": 2,
+    "name": "T-shirts",
+    "slug": "t-shirts",
+    "image": "products/2019/11/04/tshirts.jpg",
+    "price": 10000,
+    "description": "\uc608\uc05c \ubc18\ud314 \ud2f0\uc154\uce20 \uc785\ub2c8\ub2e4.",
+    "quantity": 120,
+    "available": true,
+    "created": "2019-11-04T10:33:44.106Z",
+    "updated": "2019-11-04T10:33:44.106Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 9,
+  "fields": {
+    "category": 3,
+    "name": "LG Gram",
+    "slug": "lg-gram",
+    "image": "products/2019/11/04/gram.jpeg",
+    "price": 1200000,
+    "description": "LG \uace0\uc131\ub2a5 \ub178\ud2b8\ubd81 Gram \uc785\ub2c8\ub2e4.",
+    "quantity": 30,
+    "available": true,
+    "created": "2019-11-04T10:34:48.566Z",
+    "updated": "2019-11-04T10:34:48.566Z"
+  }
+}
+]
