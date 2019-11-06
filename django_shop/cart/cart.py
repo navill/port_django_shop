@@ -62,11 +62,11 @@ class Cart:
             self.cart[str(product.id)]['product'] = product
 
         for item in self.cart.values():
-            # unit price
+            # total_price: 아이템 가격 x 수량
             item['total_price'] = item['price'] * item['quantity']
             # generator -> iterator로서 동작
             yield item
 
-    def __len__(self):
-        # 카트에 포함된 제품들의 모든 수량
-        return sum(item['quantity'] for item in self.cart.values())
+    # def __len__(self):
+    #     # 카트에 포함된 제품들의 모든 수량
+    #     return sum(item['quantity'] for item in self.cart.values())
