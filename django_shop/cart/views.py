@@ -35,11 +35,11 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
+    # TODO: 아래의 순환문과 detail template에서 두 번의 동일한 쿼리가 일어남
     for item in cart:
         # quantity 및 is_update 데이터를 담고 있는 폼을 cart-session에 저장
         # item = {'1':{'quantity': 1, 'price': 10, cartform:<..., fields = (quantity, is_update)>}}
         item['cart_form'] = CartForm(initial={'quantity': item['quantity'], 'is_update': True})
-
     return render(request, 'cart/detail.html', {'cart': cart})
 
 
