@@ -7,7 +7,7 @@ class Cart:
     def __init__(self, request):
         self.session = request.session
         # session.get(): 세션에 구성된 데이터의 키값이 숫자일 경우 문자열로 변환되어 전달된다.
-        # -> 데이터에 접근할 때 숫자로 된 키값을 문자열로 변환해서 사용해야
+        # -> 데이터에 접근할 때 숫자로 된 키값을 문자열로 변환해서 사용해야 함
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             self.session[settings.CART_SESSION_ID] = {}
@@ -63,7 +63,7 @@ class Cart:
 
         for item in self.cart.values():
             item['total_price'] = item['price'] * item['quantity']
-            # generator
+            # generator -> iterator로서 동작
             yield item
 
     def __len__(self):
