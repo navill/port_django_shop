@@ -4,7 +4,7 @@
   - cart_detail의 순환문이 실행되면서 product에 대한 쿼리
   - cart_detail 페이지의 템플릿에서 for 문에 의해 product에 대한 쿼리
 
-![image-20191106160650494](/Users/jh/Library/Application Support/typora-user-images/image-20191106160650494.png)
+![problem](/README_Folder/image/problem.png)
 
 - solution
 
@@ -37,4 +37,4 @@
           		self.cart[str(product.id)]['product'] = product
   ```
   
-  ![image-20191106160602213](/Users/jh/Library/Application Support/typora-user-images/image-20191106160602213.png)
+  ![result](/README_Folder/image/result.png)
