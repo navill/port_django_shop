@@ -19,8 +19,10 @@
           self.products = Product.objects.filter(id__in=product_ids)
           for product in self.products:
               self.cart[str(product.id)]['product'] = product
+  ```
   
   - 수정된 코드
+  
   
   ``` python
   # cart.py
