@@ -38,8 +38,8 @@ Your shopping cart
             </form>
         </td>
         <td><a href="{% url 'cart:cart_remove' product.id %}">Remove</a></td>
-        <td class="num">${{ item.price }}</td>
-        <td class="num">${{ item.total_price }}</td>
+        <td class="num">{{ item.price }}원</td>
+        <td class="num">{{ item.total_price }}원</td>
     </tr>
     {% endwith %}
     {% endfor %}
@@ -47,15 +47,15 @@ Your shopping cart
         <td>Total</td>
         <td colspan="4"></td>
         <td class="num">
-            ${{ cart.get_total_price|floatformat:"2" }}
+            {{ cart.get_total_price }}원
         </td>
     </tr>
     </tbody>
 </table>
 <p class="text-right">
-    <a href="#" class="button
+    <a href="{% url 'shop:product_list' %}" class="button
     light">Continue shopping</a>
-    <a href="#" class="button">
+    <a href="{% url 'order:create_order' %}" class="button">
         Checkout</a>
 </p>
 {% endblock %}

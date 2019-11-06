@@ -9,7 +9,7 @@ from shop.models import Product
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    address = models.CharField(max_length=150)
+    address = models.CharField(max_length=250)
     post_code = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -26,7 +26,7 @@ class OrderWithItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_item', on_delete=models.CASCADE)
     item = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
 
-    total_price = models.PositiveIntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:

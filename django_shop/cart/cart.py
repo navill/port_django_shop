@@ -62,6 +62,7 @@ class Cart:
             self.cart[str(product.id)]['product'] = product
 
         for item in self.cart.values():
+            # unit price
             item['total_price'] = item['price'] * item['quantity']
             # generator -> iterator로서 동작
             yield item
