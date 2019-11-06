@@ -13,6 +13,10 @@ class Cart:
             self.session[settings.CART_SESSION_ID] = {}
             cart = self.session[settings.CART_SESSION_ID]
         self.cart = cart
+        # cart_detail 및 templates에서 동일한 쿼리가 발생하는 문제
+        # -> query 문의 위치를 __iter__가 아닌 __init__에 정의
+        product_ids = self.cart.keys()
+        self.products = Product.objects.filter(id__in=product_ids)
 
     # 장바구니 담기 - session 추가
     def add(self, product, quantity=1, is_update=False):
@@ -20,7 +24,6 @@ class Cart:
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0, 'price': product.price}
-
         if is_update:
             # is_update=True(update) 일 때 -> cart = quantity
             self.cart[product_id]['quantity'] = quantity
@@ -54,15 +57,13 @@ class Cart:
 
     # cart에 대한 iterable 속성 부여
     # detail 페이지에서 cart 객체에 대한 iterator가 필요
-    # + cart_detail page에서 필요한 데이터 추
     def __iter__(self):
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
-        for product in products:
+        for product in self.products:
             self.cart[str(product.id)]['product'] = product
 
         for item in self.cart.values():
             item['total_price'] = item['price'] * item['quantity']
+            # generator
             yield item
 
     def __len__(self):
