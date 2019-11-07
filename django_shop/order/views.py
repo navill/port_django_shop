@@ -4,6 +4,7 @@ from django.shortcuts import render
 from cart.cart import Cart
 from order.forms import OrderForm
 from order.models import OrderWithItem
+from shop.models import Product
 
 
 def create_order(request):
@@ -23,6 +24,11 @@ def create_order(request):
                     price=item['price'],
                     quantity=item['quantity']
                 )
+                # 주문 시, 구매 수량만큼 재고 수정
+                print(dir(cart.products))
+                product = Product.objects.get(id=item['product'].id)
+                product.quantity -= item['quantity']
+                product.save()
             # 주문 완료 시, 장바구니(session) 비우기
             cart.clear_session()
             return render(request, 'order/created.html', {'order': order})
@@ -31,3 +37,4 @@ def create_order(request):
     else:
         form = OrderForm()
         return render(request, 'order/create.html', {'cart': cart, 'form': form})
+

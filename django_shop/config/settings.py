@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'debug_toolbar',
+    'memcache_status',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
-INTERNAL_IPS = ['127.0.0.1',]
+INTERNAL_IPS = ['127.0.0.1', ]
 
 ROOT_URLCONF = 'config.urls'
 
@@ -140,3 +141,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # 세션을 이용한 장바구니
 CART_SESSION_ID = 'cart'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}

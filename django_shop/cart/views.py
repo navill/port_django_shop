@@ -44,5 +44,5 @@ def cart_detail(request):
 
 def cart_clear(request):
     cart = Cart(request)
-    cart.clear_session()
-    return redirect('cart:cart_detail')
+    cart.clear_cart()
+    return redirect('shop:product_list')

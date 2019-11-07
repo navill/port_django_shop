@@ -84,9 +84,12 @@
             {% if cart.cart %}
                 {% for item in cart %}
                 <li>
-                    <p>{{ item.product.name }}: {{ item.quantity }}개</p>
+                    <a href="{% url 'cart:cart_detail' %}"><p>{{ item.product.name }}: {{ item.quantity }}개</p></a>
                 </li>
                 {% endfor %}
+                <li>
+                    <a href="{% url 'cart:clear_cart' %}">Clear</a>
+                </li>
             {% else %}
                 <li><p>cart is empty</p></li>
             {% endif %}

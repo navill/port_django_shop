@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 
@@ -8,13 +9,26 @@ from shop.models import Category, Product
 
 def product_list(request, category_slug=None):
     category = None
-    categories = Category.objects.all()
-    products = Product.objects.all()
-    page = request.GET.get('page')
+    category_all = Category.objects.all()
+    product_all = Product.objects.all()
+    # cache.get
+    products = cache.get('products')
+    categories = cache.get('categories')
 
+    # cache.set
+    if products is None:
+        products = cache.set('products', product_all, 3000)
+    if categories is None:
+        categories = cache.set('categories', category_all, 3000)
+
+    page = request.GET.get('page')
     # product list에서 category를 선택했을 경우
     if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
+        # category = get_object_or_404(Category, slug=category_slug)
+        # category = categories.get(slug=category_slug)
+        for cat in categories:
+            if category_slug == cat.slug:
+                category = cat
         products = products.filter(category=category)
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)

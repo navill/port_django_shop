@@ -37,9 +37,17 @@ class Cart:
         # request 발생 시, session.modified를 확인하고 session을 저장할지 여부를 판단
         self.session.modified = True
 
-    # 장바구니 비우기 - session 삭제
+    # session 삭제
     def clear_session(self):
         del self.session[settings.CART_SESSION_ID]
+        self.save()
+
+    # 장바구니 비우기
+    def clear_cart(self):
+        # session 자체를 지우지 않고 장바구니에 담긴 아이템을 초기화
+        self.session[settings.CART_SESSION_ID] = {}
+        cart = self.session[settings.CART_SESSION_ID]
+        self.cart = cart
         self.save()
 
     # 해당 아이템 비우기 - session 수정
