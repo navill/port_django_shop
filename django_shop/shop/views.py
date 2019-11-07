@@ -25,7 +25,7 @@ def product_list(request, category_slug=None):
     # product list에서 category를 선택했을 경우
     if category_slug:
         # category = get_object_or_404(Category, slug=category_slug)
-        # category = categories.get(slug=category_slug)
+        # category = categories.get(slug=category_slug) -> get()에 의해 db 접근
         for cat in categories:
             if category_slug == cat.slug:
                 category = cat
