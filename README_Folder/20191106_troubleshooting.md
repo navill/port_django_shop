@@ -42,7 +42,6 @@
   
   
   
-<<<<<<< HEAD
   ## Trouble Shooting - 20191107
   
   ![image1](/README_Folder/image/trouble1107_1.png)
@@ -85,7 +84,7 @@
     - 아래의 그림은 categories.get()을 사용할 경우
   
     ![image3](/README_Folder/image/trouble1107_3.png)
-=======
+
   ``` python
   # cart.py
   class Cart:
