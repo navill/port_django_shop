@@ -42,7 +42,10 @@
   
   
   
+<<<<<<< HEAD
 
+=======
+>>>>>>> e1bf70fbf2e85e611e7b1f07765b3136ff748b22
   ## Trouble Shooting - 20191107
 
   ![image1](/README_Folder/image/trouble1107_1.png)
@@ -85,6 +88,7 @@
     - 아래의 그림은 categories.get()을 사용할 경우
     
     ![image3](/README_Folder/image/trouble1107_3.png)
+<<<<<<< HEAD
 =======
   ``` python
   # cart.py
@@ -147,3 +151,7 @@
 
   ![image3](/README_Folder/image/trouble1107_3.png)
 
+=======
+
+  
+>>>>>>> e1bf70fbf2e85e611e7b1f07765b3136ff748b22
