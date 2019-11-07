@@ -37,19 +37,24 @@
 - Cache setting
 
   - ```
-    CACHES
+    CACHES = {
+        'default': {
+          'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+      }
+    }
     ```
-
+    
     : dictionary 형태로 프로젝트에서 사용 가능한 모든 캐쉬 설정 
-
+    
     - `BACKEND`: 사용할 캐쉬
     - `KEY_FUNCTION`: 접두사, 버전 및 키를 인수로 사용하고 최종 캐시 키를 반환하는 콜 러블에 대한 점선 경로가 포함 된 문자열
-    - `KEY_PREFIX`: 충돌을 피하기 위해 모든 캐시 키의 문자열 접두사
+  - `KEY_PREFIX`: 충돌을 피하기 위해 모든 캐시 키의 문자열 접두사
     - `LOCATION`: 캐시의 위치. 캐시 백엔드에 따라 디렉토리, 호스트 및 포트 또는 인 메모리 백엔드의 이름 일 수 있습니다
     - `OPTIONS`: 캐시 백엔드로 전달 될 추가 매개 변수
     - `TIMEOUT`: 캐시 키를 저장하기 위한 기본 제한 시간 (초, default: 300s). None으로 설정하면 캐시 키가 만료되지 않음
     - `VERSION`: 캐시 키의 기본 버전 번호(버전 관리를 위해 사용)
-
+    
   - `CACHE_MIDDLEWARE_ALIAS`: 저장 공간에 사용할 캐쉬의 별칭
 
   - `CACHE_MIDDLEWARE_KEY_PREFIX`: 캐시 키에 사용할 접두사
