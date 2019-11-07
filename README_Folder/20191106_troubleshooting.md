@@ -44,7 +44,7 @@
 
 ## Trouble Shooting - 20191107
 
-![image1](README_Folder/image/trouble1107_1.png)
+![image1](/README_Folder/image/trouble1107_1.png)
 
 - product_list 페이지 로딩하는데 오랜 시간이 걸림
 
@@ -59,7 +59,7 @@
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
-  ![image2](README_Folder/image/trouble1107_2.png)
+  ![image2](/README_Folder/image/trouble1107_2.png)
 
 
 
@@ -83,5 +83,5 @@
 
   - 아래의 그림은 categories.get()을 사용할 경우
 
-  ![image3](README_Folder/image/trouble1107_3.png)
+  ![image3](/README_Folder/image/trouble1107_3.png)
 
