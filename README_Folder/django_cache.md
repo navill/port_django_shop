@@ -74,7 +74,7 @@
     }
   ```
 
-  ![cache_status](/Users/jh/Desktop/스크린샷 2019-11-01 오후 8.50.29.png)
+  ![cache_status](/README_Folder/image/cache_status.png)
 
   - curr item: cache에 저장된 아이템 개수
 
