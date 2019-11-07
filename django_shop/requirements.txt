@@ -3,10 +3,12 @@ cryptography==2.8
 Django==2.2.6
 django-debug-toolbar==2.0
 django-extensions==2.2.5
+django-memcache-status==2.1
 Pillow==6.2.1
 pycparser==2.19
 pygraphviz==1.5
 pyOpenSSL==19.0.0
+python-memcached==1.59
 pytz==2019.3
 six==1.12.0
 sqlparse==0.3.0
