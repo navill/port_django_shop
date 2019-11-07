@@ -6,7 +6,12 @@ Your shopping cart
 {% endblock %}
 
 {% block content %}
-<h1>Your shopping cart</h1>
+{% if cart|length > 0 %}
+    <h1>Your shopping cart</h1>
+{% else %}
+    <h1>Your shopping cart is empty</h1>
+{% endif %}
+
 <table class="cart">
     <thead>
     <tr>

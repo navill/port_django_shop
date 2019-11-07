@@ -34,4 +34,4 @@ class OrderWithItem(models.Model):
         verbose_name_plural = "OrderWithItems"
 
     def __str__(self):
-        return self.order
+        return str(self.order)

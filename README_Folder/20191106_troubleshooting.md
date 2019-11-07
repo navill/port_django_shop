@@ -1,4 +1,4 @@
-## Trouble Shooting
+## Trouble Shooting - 20191106
 
 - 짧지만 동일한 쿼리문이 두번 실행됨 
   - cart_detail의 순환문이 실행되면서 product에 대한 쿼리
@@ -39,3 +39,8 @@
   ```
   
   ![result](/README_Folder/image/result.png)
+
+
+
+## Trouble Shooting - 20191107
+

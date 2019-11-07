@@ -81,11 +81,15 @@
     <div id="cart-list">
         <!--cart - product.name, quantity-->
         <ul>
-            {% for item in cart %}
-            <li>
-                <p>{{ item.product.name }}: {{ item.quantity }}개</p>
-            </li>
-            {% endfor %}
+            {% if cart.cart %}
+                {% for item in cart %}
+                <li>
+                    <p>{{ item.product.name }}: {{ item.quantity }}개</p>
+                </li>
+                {% endfor %}
+            {% else %}
+                <li><p>cart is empty</p></li>
+            {% endif %}
         </ul>
     </div>
 
