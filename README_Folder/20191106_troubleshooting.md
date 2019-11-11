@@ -85,3 +85,47 @@
   - 아래의 그림은 categories.get()을 사용할 경우
 
   ![image3](/README_Folder/image/trouble1107_3.png)
+
+
+
+## Trouble Shooting - 20191111
+
+- 쿼리셋을 cache에 저장하고, 객체의 속성에 접근 할 때,
+
+  - 객체의 filtering 과정에서 반복적인 데이터베이스 접근
+
+  - ex) view의 products.filter(category=category) 및 template에서 'for product in products' 구문에서 쿼리 발생
+
+    ![image4](/README_Folder/image/trouble1111_1.png)
+
+- Solution
+
+  - cache.get()을 통해 전달받은 쿼리셋을 파이썬 객체로 변환
+
+  - 파이썬 객체의 속성에 접근하기 때문에 데이터베이스에 접근하지 않고도 원하는 동작을 구현할 수 있다.
+
+    ![image5](/README_Folder/image/trouble1111_2.png)
+
+    ```python
+        if category_slug:
+            for cat in categories:
+                if category_slug == cat.slug:
+                    category = cat
+            products = products.filter(category=category)
+            # python 객체로 변환하여, 한 번의 db 접근으로 pagination 및 template에서 사용
+            products = [product for product in products]
+        paginator = Paginator(products, 6)
+        ...
+    ```
+
+    
+
+- 고려사항
+
+  - list comprehension을 이용해 파이썬 객체로 변활할 때, 객체가 많은 양의 데이터를 담고 있을 경우, 메모리 낭비가 발생할 수 있다.
+
+  - 따라서 가능하면 제너레이터(lazy evaluation)를 이용해 메모리의 소비를 줄이는 방법을 지양하는 것이 좋다.
+
+    - 위 구문은 paginator의 동작을 위해 필요한 속성(len())을 generator가 가지고 있지 않기 때문에 사용할 수 없다.
+
+    - generator -> list로 변환하여 사용할 수 있지만, 메모리에 대한 이득이 크지 않음.
