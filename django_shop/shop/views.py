@@ -1,6 +1,8 @@
+import itertools
+
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.db.models.query import QuerySet
+from django.db.models.query import QuerySet, prefetch_related_objects
 from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
@@ -32,10 +34,16 @@ def product_list(request, category_slug=None):
     if category_slug:
         # category = get_object_or_404(Category, slug=category_slug)
         # category = categories.get(slug=category_slug) -> get()에 의해 db 접근
-        for cat in categories:
-            if category_slug == cat.slug:
-                category = cat
+        gen_cat = (cat for cat in categories if category_slug == cat.slug)
+        try:
+            category = next(gen_cat)
+        except StopIteration:
+            # category_slug의 miss가 일어나지 않는다고 가정
+            pass
+        # raise query
         products = products.filter(category=category)
+        # python 객체로 변환하여, 한 번의 db 접근으로 pagination 및 template에서 사용
+        products = [product for product in products]
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
     return render(request, 'shop/product/list.html',
