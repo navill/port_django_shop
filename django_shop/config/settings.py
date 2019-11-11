@@ -24,7 +24,7 @@ SECRET_KEY = 'lra+g+s1v=zye=*+2^#)7zlo-jgx6@#f7jwa718k$2u@!f0_cs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -154,9 +154,11 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static'
 
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)  # s3
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # s3
+DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # 세션을 이용한 장바구니
 CART_SESSION_ID = 'cart'
