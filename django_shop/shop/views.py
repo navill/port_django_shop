@@ -19,9 +19,6 @@ def product_list(request, category_slug=None):
     categories = cache.get('categories')
 
     # cache.set
-    # 기존의 코드 -> 첫 페이지 로드 시, products가 None을 반환하기 때문에
-    # 두 번 연속(캐쉬가 리셋되기 전) 페이지를 로드 해야 제품 리스트가 표시되는 문제
-    # => 아래와 같이 QuerySet의 인스턴스인지 여부를 확인하여 cache.get/set 처리
     if not isinstance(products, QuerySet):  # 또는 그냥 if products is None:
         cache.set('products', product_all, 300)
         products = cache.get('products')
@@ -39,6 +36,7 @@ def product_list(request, category_slug=None):
             category = next(gen_cat)
         except StopIteration:
             # category_slug의 miss가 일어나지 않는다고 가정
+            # miss match -> do_stuff()
             pass
         # raise query
         products = products.filter(category=category)
