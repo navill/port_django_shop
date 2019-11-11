@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.core.paginator import Paginator
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
@@ -16,10 +17,15 @@ def product_list(request, category_slug=None):
     categories = cache.get('categories')
 
     # cache.set
-    if products is None:
-        products = cache.set('products', product_all, 3000)
-    if categories is None:
-        categories = cache.set('categories', category_all, 3000)
+    # 기존의 코드 -> 첫 페이지 로드 시, products가 None을 반환하기 때문에
+    # 두 번 연속(캐쉬가 리셋되기 전) 페이지를 로드 해야 제품 리스트가 표시되는 문제
+    # => 아래와 같이 QuerySet의 인스턴스인지 여부를 확인하여 cache.get/set 처리
+    if not isinstance(products, QuerySet):  # 또는 그냥 if products is None:
+        cache.set('products', product_all, 300)
+        products = cache.get('products')
+    if not isinstance(categories, QuerySet):
+        cache.set('categories', category_all, 300)
+        categories = cache.get('categories')
 
     page = request.GET.get('page')
     # product list에서 category를 선택했을 경우
