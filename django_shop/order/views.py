@@ -31,7 +31,7 @@ def create_order(request):
 
             # bulk_create를 이용한 OrderWithItem db 생성
             OrderWithItem.objects.bulk_create(order_item_list)
-            # bulk_update를 이용한 Product.quantity 업데이트
+            # bulk_update를 이용한 Product.quantity 업데이트(release version2.2)
             products.bulk_update(product_bulk.values(), ['quantity'])
             # 주문 완료 시, 장바구니(session) 비우기
             cart.clear_session()
