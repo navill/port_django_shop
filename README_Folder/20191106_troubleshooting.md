@@ -168,8 +168,8 @@
 
     ```python
     if products.exists() and request.method == 'POST':
-    		form = OrderForm(request.POST)      
-    	  if form.is_valid():
+        form = OrderForm(request.POST)
+        if form.is_valid():
             order_item_obj = None
             order_list = []
             order = form.save()
