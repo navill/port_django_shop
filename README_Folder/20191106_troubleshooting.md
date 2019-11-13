@@ -129,3 +129,85 @@
     - 위 구문은 paginator의 동작을 위해 필요한 속성(len())을 generator가 가지고 있지 않기 때문에 사용할 수 없다.
 
     - generator -> list로 변환하여 사용할 수 있지만, 메모리에 대한 이득이 크지 않음.
+
+
+
+### Trouble Shooting - 20191113
+
+- 많은 양의 제품 결제 시, 불필요한 db 접근과 많은 시간이 걸림
+
+  - 6개의 아이템 기준 26.95ms이 걸린다.
+
+  - 기존 코드
+
+    ```python
+    if cart.products and request.method == 'POST':
+        form = OrderForm(request.POST)				
+        if form.is_valid():
+            order = form.save()
+            for item in cart:
+                OrderWithItem.objects.create(
+                  # from order form(model:Order)
+                  order=order,
+                  # from cart attribute
+                  item=item['product'],
+                  price=item['price'],
+                  quantity=item['quantity']
+                )
+                # 주문 시, 구매 수량만큼 재고 수정
+                product = Product.objects.get(id=item['product'].id)
+                product.quantity -= item['quantity']
+                product.save()
+    ```
+
+    ![trouble1113](/README_Folder/image/trouble1113_1.png)
+
+- solution
+
+  - django 2.2 version에 추가된 [bulk](https://docs.djangoproject.com/en/2.2/ref/models/querysets/#bulk-update)를 이용한 OrderWithItem 생성 및 Product.quantity 업데이트
+
+    ```python
+    if products.exists() and request.method == 'POST':
+    		form = OrderForm(request.POST)      
+    	  if form.is_valid():
+            order_item_obj = None
+            order_list = []
+            order = form.save()
+            # dict-type의 Product 객체 생성
+            product_bulk = products.in_bulk()
+            for item in cart:
+                order_item_obj = OrderWithItem(order=order,
+                                               item=item['product'],
+                                               price=item['price'],
+                                               quantity=item['quantity'])
+                # OrderWithItem 객체를 리스트에 추가
+                order_list.append(order_item_obj)
+                product_bulk[item['product'].id].quantity -= item['quantity']
+    
+                # bulk_create를 이용한 OrderWithItem db 생성
+                OrderWithItem.objects.bulk_create(order_list)
+                # bulk_update를 이용한 Product.quantity 업데이트
+                products.bulk_update(product_bulk.values(), ['quantity'])
+    ```
+
+    ![trouble1113](/README_Folder/image/trouble1113_2.png)
+
+    - 6개의 아이템 기준 8.32ms이 걸린다.
+
+    - if 문을 이용해 쿼리 존재 유무를 판단할 때 exists() 메서드를 이용하는 것이 좋음
+
+      - 단, 해당 쿼리문을 이하 블럭에서 사용하지 않을 경우 쿼리문을 쓰는 것이 좋음
+
+        ```python
+        # queryset에 접속
+        if query_set:
+          	# queryset에 한 번 더 접속
+          	query_set.get(id=1)
+        
+        # queryset에 접속하지 않음
+        if query_set.exists():
+          	# queryset에 접속
+        		query_set.get(id=1)
+        ```
+
+      
