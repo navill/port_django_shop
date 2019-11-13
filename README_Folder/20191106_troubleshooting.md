@@ -207,7 +207,7 @@
         # queryset에 접속하지 않음
         if query_set.exists():
           	# queryset에 접속
-            query_set.get(id=1)
+                query_set.get(id=1)
         ```
 
       
