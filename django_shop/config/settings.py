@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'order.apps.OrderConfig',
+    'account.apps.AccountConfig',
     # default settings
     'django.contrib.admin',
     'django.contrib.auth',
