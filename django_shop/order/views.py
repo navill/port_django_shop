@@ -16,7 +16,7 @@ def create_order(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             order_item_obj = None
-            order_list = []
+            order_item_list = []
             order = form.save()
             # dict-type의 Product 객체 생성
             product_bulk = products.in_bulk()
@@ -26,11 +26,11 @@ def create_order(request):
                                            price=item['price'],
                                            quantity=item['quantity'])
                 # OrderWithItem 객체를 리스트에 추가
-                order_list.append(order_item_obj)
+                order_item_list.append(order_item_obj)
                 product_bulk[item['product'].id].quantity -= item['quantity']
 
             # bulk_create를 이용한 OrderWithItem db 생성
-            OrderWithItem.objects.bulk_create(order_list)
+            OrderWithItem.objects.bulk_create(order_item_list)
             # bulk_update를 이용한 Product.quantity 업데이트
             products.bulk_update(product_bulk.values(), ['quantity'])
             # 주문 완료 시, 장바구니(session) 비우기
