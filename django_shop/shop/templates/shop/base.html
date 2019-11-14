@@ -14,7 +14,18 @@
 <body style="text-align:center;">
 <div id="header">
     <a href="{% url 'shop:product_list' %}" class="logo" style="font-size: 30px; color: #4c8a46;">Django shop</a></div>
-
+    <div>
+        {% if request.user.is_authenticated %}
+        <div class='user_name'>
+            <p>Hi {{ request.user.first_name }}</p>
+        </div>
+        <div class="user">
+            <a href="{% url 'edit' %}">Edit profile</a>
+            <a href="{% url 'password_change' %}">Change Password</a>
+            <a href="{% url 'logout' %}">Log-out</a>
+        </div>
+        {% endif %}
+    </div>
 {% block content %}
 {% endblock %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

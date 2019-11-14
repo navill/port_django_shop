@@ -1,0 +1,15 @@
+{% extends 'shop/base.html' %}
+{% block title %}Edit your account{% endblock %}
+
+{% block content %}
+    <h1>Edit your account</h1>
+    <p>You can edit your account using the following form:</p>
+<!--file upload를 위해 multipart/form-data 사용-->
+    <div class="edit-form">
+        <form action="." method="post" enctype="multipart/form-data" style="height: 300px;width: 865px;float: right;text-align: right;padding-right: 220px;">
+            {{ user_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Save Change"></p>
+        </form>
+    </div>
+{% endblock %}
