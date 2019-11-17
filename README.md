@@ -17,6 +17,7 @@
 - Account - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/account)
   - 사용자 등록 및 유저 정보 변경 기능
     - django.contrib.auth.views를 이용하여 구현
-  - 관리자 계정일 경우 유저의 동작 추적(추가예정) - ContentType
+  - 관리자 계정일 경우 유저의 동작 추적(추가예정) - [ContentType](README_Folder/contenttype.md)
 
 ### [TroubleShooting](README_Folder/20191106_troubleshooting.md)
+
