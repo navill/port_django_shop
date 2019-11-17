@@ -23,12 +23,7 @@ class Cart:
     def add(self, product, quantity=1, is_update=False):
         # int(product.id)일 경우 -> self.cart[product_id] 값을 검색할 수 없음
         product_id = str(product.id)
-        data = None
         if product_id not in self.cart:
-            # for temp_pro in self.products:
-            #     if temp_pro.id == product_id:
-            #         data = serializers.serialize('json', temp_pro)
-            # self.cart[product_id] = {'quantity': 0, 'price': product.price, 'product': data}
             self.cart[product_id] = {'quantity': 0, 'price': product.price}
         if is_update:
             # is_update=True(update) 일 때 -> cart = quantity
@@ -52,8 +47,7 @@ class Cart:
     def clear_cart(self):
         # session 자체를 지우지 않고 장바구니에 담긴 아이템을 초기화
         self.session[settings.CART_SESSION_ID] = {}
-        cart = self.session[settings.CART_SESSION_ID]
-        self.cart = cart
+        self.cart = self.session[settings.CART_SESSION_ID]
         self.save()
 
     # 해당 아이템 비우기 - session 수정

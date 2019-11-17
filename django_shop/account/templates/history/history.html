@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+{% block title %}History{% endblock %}
+{% block content %}
+    <ul>
+        {% for action in actions %}
+        <li>
+            <p>[{{ action.created}}]:
+            {{ action.user }} {{ action.verb }}
+        {% if action.content_object %}
+            {{ action.content_object }}
+        {% endif %}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

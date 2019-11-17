@@ -19,3 +19,6 @@ class Action(models.Model):
                                      on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(null=True, blank=True, db_index=True)
     content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        ordering = ['-created']

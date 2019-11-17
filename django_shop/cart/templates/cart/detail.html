@@ -33,7 +33,7 @@ Your shopping cart
                 {% else %}{% static 'img/no_image.png' %}{% endif %}">
             </a>
         </td>
-        <td>{{ product.name }}</td>
+        <td>{{ item.product.name }}</td>
         <td>
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {{ item.cart_form.quantity }}

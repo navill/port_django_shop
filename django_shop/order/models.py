@@ -13,10 +13,6 @@ class Order(models.Model):
     post_code = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        verbose_name = "Order"
-        verbose_name_plural = "Orders"
-
     def __str__(self):
         return self.first_name
 
@@ -28,10 +24,6 @@ class OrderWithItem(models.Model):
 
     price = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=1)
-
-    class Meta:
-        verbose_name = "OrderWithItem"
-        verbose_name_plural = "OrderWithItems"
 
     def __str__(self):
         return str(self.order)
