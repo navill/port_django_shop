@@ -47,6 +47,9 @@
             <div class="album py-5 bg-light">
                 <div class="container">
                     <div class="row">
+                        {% for pro in temp %}
+                        <p>{{ pro }}</p>
+                        {% endfor %}
                         {% for product in products %}
                             <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">

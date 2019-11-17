@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core import serializers
 
 from shop.models import Product
 
@@ -22,7 +23,12 @@ class Cart:
     def add(self, product, quantity=1, is_update=False):
         # int(product.id)일 경우 -> self.cart[product_id] 값을 검색할 수 없음
         product_id = str(product.id)
+        data = None
         if product_id not in self.cart:
+            # for temp_pro in self.products:
+            #     if temp_pro.id == product_id:
+            #         data = serializers.serialize('json', temp_pro)
+            # self.cart[product_id] = {'quantity': 0, 'price': product.price, 'product': data}
             self.cart[product_id] = {'quantity': 0, 'price': product.price}
         if is_update:
             # is_update=True(update) 일 때 -> cart = quantity
