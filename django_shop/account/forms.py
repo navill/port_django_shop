@@ -28,6 +28,14 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match.")
         return cd['password2']
 
+    # def clean_username(self):
+    #     cd = self.cleaned_data
+    #     try:
+    #         User.objects.get(username=cd['username'])
+    #     except User.DoesNotExist:
+    #         return cd['username']
+    #     raise forms.ValidationError('username is duplicated.')
+
     def clean_email(self):
         # clean_email은 clean_password2()에서 처리할 수 있지만
         # 명시적으로 분리하는 것이 맞다고 봄

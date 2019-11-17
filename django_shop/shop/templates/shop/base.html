@@ -28,6 +28,8 @@
             {% endif %}
             <a href="{% url 'logout' %}">Log-out</a>
         </div>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
         {% endif %}
     </div>
 {% block content %}
