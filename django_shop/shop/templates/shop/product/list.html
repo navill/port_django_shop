@@ -94,8 +94,16 @@
                 <li><p>cart is empty</p></li>
             {% endif %}
         </ul>
-    </div>
 
+    </div>
+    <div id="best-seller">
+        <p>Best-Seller Products</p>
+        <ol start="1">
+            {% for suggested_item in suggested_items %}
+            <li>{{suggested_item}}</li>
+            {% endfor %}
+        </ol>
+    </div>
     <div class="pagination">
     <span class="step-links">
         {% if products.has_previous %}

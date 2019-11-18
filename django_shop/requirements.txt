@@ -1,3 +1,5 @@
+boto3==1.10.14
+botocore==1.13.14
 cffi==1.13.2
 cryptography==2.8
 Django==2.2.6
@@ -5,12 +7,19 @@ django-cachalot==2.1.0
 django-debug-toolbar==2.0
 django-extensions==2.2.5
 django-memcache-status==2.1
+django-storages==1.7.2
+docutils==0.15.2
+jmespath==0.9.4
 Pillow==6.2.1
 pycparser==2.19
 pygraphviz==1.5
 pyOpenSSL==19.0.0
+python-dateutil==2.8.0
 python-memcached==1.59
 pytz==2019.3
+redis==3.3.11
+s3transfer==0.2.1
 six==1.12.0
 sqlparse==0.3.0
+urllib3==1.25.6
 Werkzeug==0.16.0

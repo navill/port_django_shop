@@ -21,4 +21,9 @@
             {{ product.description|linebreaks }}
         </div>
     </div>
+    <div class="suggested_item">
+        {% if suggested_items %}
+        <p>Frequently Purchased Together: {{ suggested_items|join:", " }}</p>
+        {% endif %}
+    </div>
 {% endblock %}
