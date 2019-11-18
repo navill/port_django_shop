@@ -6,8 +6,8 @@ from shop import views
 app_name = 'shop'
 
 urlpatterns = [
-    path('<slug:category_slug>/', views.product_list, name='products_by_category'),
-    path('product/<int:id>/', views.product_detail, name='product_detail'),
+    path('shop/<slug:category_slug>/', views.product_list, name='products_by_category'),
+    path('shop/product/<int:id>/', views.product_detail, name='product_detail'),
     # path('', cache_page(60 * 15)(views.product_list), name='product_list'),
     path('', views.product_list, name='product_list'),
 ]
