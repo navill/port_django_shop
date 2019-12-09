@@ -8,6 +8,8 @@ from cart.forms import CartForm
 from shop.models import Category, Product
 from shop.recommender import Recommend
 
+r = Recommend()
+
 
 def product_list(request, category_slug=None):
     category = None
@@ -18,12 +20,15 @@ def product_list(request, category_slug=None):
     categories = cache.get('categories')
 
     # cache.set
-    if not isinstance(products, QuerySet):  # 또는 그냥 if products is None:
+    if not isinstance(products, QuerySet) and not isinstance(categories, QuerySet):  # 또는 그냥 if products is None:
         cache.set('products', product_all, 300)
-        products = cache.get('products')
-    if not isinstance(categories, QuerySet):
         cache.set('categories', category_all, 300)
+        products = cache.get('products')
         categories = cache.get('categories')
+        # 만일 memcached가 동작하지 않을 경우
+        if products is None:
+            products = product_all
+            categories = category_all
 
     page = request.GET.get('page')
     # product list에서 category를 선택했을 경우
@@ -40,17 +45,26 @@ def product_list(request, category_slug=None):
         products = [product for product in products]
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
-    r = Recommend()
-    suggested_items = r.suggest_items()
+    try:
+        r.connect_status = True
+        suggested_items = r.suggest_items()
+    except Exception as e:
+        suggested_items = None
+        print(f'not connect redis:{e}')
     return render(request, 'shop/product/list.html',
                   {'categories': categories, 'category': category, 'products': products,
                    'suggested_items': suggested_items})
 
 
+# Recommend를 singleton으로 만들 것을 고려
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     cart_form = CartForm()
-    r = Recommend()
-    suggested_items = r.suggest_items(id)
+    try:
+        r.connect_status = True
+        suggested_items = r.suggest_items(product_id=id)
+    except Exception as e:
+        suggested_items = None
+        print(f'not connect redis:{e}')
     return render(request, 'shop/product/detail.html',
                   {'product': product, 'cart_form': cart_form, 'suggested_items': suggested_items})

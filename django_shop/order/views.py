@@ -7,6 +7,8 @@ from order.forms import OrderForm
 from order.models import OrderWithItem
 from shop.recommender import Recommend
 
+r = Recommend()
+
 
 def create_order(request):
     cart = Cart(request)
@@ -22,9 +24,9 @@ def create_order(request):
             product_bulk = products.in_bulk()
             for item in cart:
                 order_item_obj = OrderWithItem(order=order,
-                                           item=item['product'],
-                                           price=item['price'],
-                                           quantity=item['quantity'])
+                                               item=item['product'],
+                                               price=item['price'],
+                                               quantity=item['quantity'])
                 # OrderWithItem 객체를 리스트에 추가
                 order_item_list.append(order_item_obj)
                 product_bulk[item['product'].id].quantity -= item['quantity']
@@ -38,8 +40,12 @@ def create_order(request):
             # bulk_update를 이용한 Product.quantity 업데이트(release version2.2)
             products.bulk_update(product_bulk.values(), ['quantity'])
             # 함께 구매한 아이템 등록
-            r = Recommend()
-            r.buy_item(products)
+            try:
+                r.connect_status = True
+                r.buy_item(products)
+            except Exception as e:
+                print(f'not connect redis:{e}')
+
             # 주문 완료 시, 장바구니(session) 비우기
             cart.clear_session()
             return render(request, 'order/created.html', {'order': order})
