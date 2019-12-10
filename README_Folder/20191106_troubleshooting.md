@@ -267,11 +267,11 @@ def func_b(product_ids):
 
   - before: 메모리 측면에서 더 좋은 성능을 보이지만 속도가 느림
 
-  ![스크린샷 2019-12-10 오후 1.50.27](/Users/jh/Desktop/스크린샷 2019-12-10 오후 1.50.27.png)
+  ![20191210_before](/README_Folder/image/20191210_before.png)
 
   - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이는 분명함
 
-  ![image-20191210145222277](/Users/jh/Library/Application Support/typora-user-images/image-20191210145222277.png)
+  !![20191210_after](/README_Folder/image/20191210_after.png)
 
   - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있음
 
@@ -282,4 +282,3 @@ def func_b(product_ids):
     - for문을 이용할 때 메모리 증가치가 0인 이유를 확인하지 못함
 
       -> 실제로 메모리 증가가 이루어지지 않는지, 테스트상 오류인지 확인되지 않음
-
