@@ -210,3 +210,76 @@
         ```
 
       
+
+### Trouble Shooting 
+
+- 이중 for문을 이용한 구조를 변경하고자 함
+
+```python
+		# before
+		def buy_item(self, products):
+        if self.connect_status:
+            product_ids = [p.id for p in products]
+            for product_id in product_ids:
+                r.zincrby('product', value=product_id, amount=1)
+                for with_id in product_ids:
+                    # product_id + product_id를 피하기 위한 조건문
+                    # -> A, B, C를 함께 구매할 경우 A,B & A,C만 해당, A,A는 제외되어야 한다.
+                    if product_id != with_id:
+                        r.zincrby(f'product:{product_id}', value=with_id, amount=1)
+    # after
+    def buy_item(self, products):
+        if self.connect_status:
+            com_ids = itertools.combinations(product_ids, len(product_ids) - 1)
+            for ids in com_ids:
+                product_id = list(set(product_ids) - set(ids))
+                product_id = int(product_id[0])
+                partial_zincrby = partial(r.zincrby, name=f'product:{product_id}', amount=1)
+                list(map(lambda value: partial_zincrby(value=value), ids))
+```
+
+- solution
+  - itertools.combination을 이용한 순열 조합을 생성하고 한 번의 순환문(코드 상에서)을 이용해 zincrby 실행
+
+```python
+# testcode
+
+@benchmarker_time
+@profile(precision=4)
+def func_a(product_ids):
+    for item in product_ids:
+        for item2 in product_ids:
+            if item != item2:
+                print(item2)
+
+@benchmarker_time
+@profile(precision=4)
+def func_b(product_ids):
+    # 순열 조합 생성
+    li = itertools.combinations(product_ids, len(product_ids) - 1)
+    for item2 in li:
+        item = set(product_ids) - set(item2)
+        for i in item2:
+            print(i)
+```
+
+- result
+
+  - before: 메모리 측면에서 더 좋은 성능을 보이지만 속도가 느림
+
+  ![스크린샷 2019-12-10 오후 1.50.27](/Users/jh/Desktop/스크린샷 2019-12-10 오후 1.50.27.png)
+
+  - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이는 분명함
+
+  ![image-20191210145222277](/Users/jh/Library/Application Support/typora-user-images/image-20191210145222277.png)
+
+  - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있음
+
+  - 하지만 객체의 수(제품)가 많지 않을 경우 큰 이득을 취할 수 없음
+
+  - 메모리 효율에 대해서는 좀 더 조사가 필요함
+
+    - for문을 이용할 때 메모리 증가치가 0인 이유를 확인하지 못함
+
+      -> 실제로 메모리 증가가 이루어지지 않는지, 테스트상 오류인지 확인되지 않음
+
