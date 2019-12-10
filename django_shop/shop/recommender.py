@@ -1,8 +1,5 @@
 import itertools
-from memory_profiler import profile
-
-import time
-from functools import partial, wraps
+from functools import partial
 
 import redis
 from django.conf import settings
@@ -12,10 +9,6 @@ from shop.models import Product
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
-
-
-
-
 
 
 class Recommend:
@@ -66,5 +59,3 @@ class Recommend:
             # item_ids 순서에 맞게 product object 정렬
             best_items.sort(key=lambda b: item_ids.index(b.id))
             return best_items
-
-
