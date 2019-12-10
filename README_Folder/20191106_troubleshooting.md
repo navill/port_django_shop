@@ -216,8 +216,8 @@
 - 이중 for문을 이용한 구조를 변경하고자 함
 
 ```python
-		# before
-		def buy_item(self, products):
+    # before
+    def buy_item(self, products):
         if self.connect_status:
             product_ids = [p.id for p in products]
             for product_id in product_ids:
