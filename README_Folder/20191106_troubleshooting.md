@@ -224,7 +224,7 @@
                 r.zincrby('product', value=product_id, amount=1)
                 for with_id in product_ids:
                     # product_id + product_id를 피하기 위한 조건문
-                    # -> A, B, C를 함께 구매할 경우 A,B & A,C만 해당, A,A는 제외되어야 한다.
+                    # -> A, B, C를 함께 구매할 경우 (A,B), (A,C), (B,C)만 해당, A,A는 제외되어야 한다.
                     if product_id != with_id:
                         r.zincrby(f'product:{product_id}', value=with_id, amount=1)
     # after
@@ -271,7 +271,7 @@ def func_b(product_ids):
 
   - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이는 분명함
 
-  !![20191210_after](/README_Folder/image/20191210_after.png)
+  ![20191210_after](/README_Folder/image/20191210_after.png)
 
   - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있음
 
