@@ -1,6 +1,6 @@
 # Portfolio: django_shop
 
-**django shop: http://django.navill.shop/
+**django shop**: http://django.navill.shop/
 
 ## App 구성
 
