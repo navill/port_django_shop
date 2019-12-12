@@ -230,6 +230,7 @@
     # after
     def buy_item(self, products):
         if self.connect_status:
+            product_ids = [p.id for p in products]
             com_ids = itertools.combinations(product_ids, len(product_ids) - 1)
             for ids in com_ids:
                 product_id = list(set(product_ids) - set(ids))
