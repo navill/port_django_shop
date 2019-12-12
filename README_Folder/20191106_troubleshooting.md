@@ -358,19 +358,8 @@ def func_b(product_ids):
     
     
     class MainClass(SingletonInstance):
-        # 새로운 객체를 생성하더라도 정체성이 변하지 않지만,
-        # 초기화된 값 또한 변하지 않기 떄문에 주의
-        # 함수를 실행하기 위한 목적으로 사용
         def __init__(self, a, b, c):
             self.result = a + b + c
-    
-    
-    # a = MainClass.instance(1, 2, 3)
-    # print(a.result)  # 6
-    # print(id(a))  # 4565035048
-    # b = MainClass.instance(2, 3, 4)
-    # print(b.result)  # 6
-    # print(id(b))  # 4565035048
     
     
     # 2: 새로운 객체 생성 -> init을 포함한 객체가 _instances에 할당
