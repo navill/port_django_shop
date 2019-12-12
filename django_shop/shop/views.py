@@ -50,21 +50,22 @@ def product_list(request, category_slug=None):
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
+    r.connect_status = False
     return render(request, 'shop/product/list.html',
                   {'categories': categories, 'category': category, 'products': products,
                    'suggested_items': suggested_items})
 
 
-# Recommend를 singleton으로 만들 것을 고려
-def product_detail(request, id):
-    product = get_object_or_404(Product, id=id)
+def product_detail(request, p_id):
+    product = get_object_or_404(Product, id=p_id)
     cart_form = CartForm()
     r = Recommend()
     try:
         r.connect_status = True
-        suggested_items = r.suggest_items(product_id=id)
+        suggested_items = r.suggest_items(product_id=p_id)
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
+    r.connect_status = False
     return render(request, 'shop/product/detail.html',
                   {'product': product, 'cart_form': cart_form, 'suggested_items': suggested_items})

@@ -9,6 +9,7 @@ from shop.pattern_singleton import Singleton
 
 
 class Recommend(Singleton):
+    # 초기화값이 없기 떄문에 아래의 self.r, self.connect_status는 객체와 상관없이 동일한 값을 유지한다.
     def __init__(self):
         self.r = redis.StrictRedis(host=settings.REDIS_HOST,
                                    port=settings.REDIS_PORT,
