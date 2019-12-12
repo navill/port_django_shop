@@ -6,11 +6,11 @@
 
 ![problem](/README_Folder/image/problem.png)
 
-- solution
+- **Solution**
 
-- Cart.\_iter_ 에 포함된 쿼리문을 Cart.\_init_으로 이동
+  - Cart.\_iter_ 에 포함된 쿼리문을 Cart.\_init_으로 이동
 
-  - 기존 코드
+  기존 코드
 
   ```python
   # cart.Cart
@@ -20,10 +20,10 @@
         for product in self.products:
               self.cart[str(product.id)]['product'] = product
   ```
-  
-  - 수정된 코드
-  
-  
+
+  수정된 코드
+
+
   ``` python
   # cart.py
   class Cart:
@@ -37,7 +37,7 @@
     		for product in self.products:
           		self.cart[str(product.id)]['product'] = product
   ```
-  
+
   ![result](/README_Folder/image/result.png)
 
 
@@ -54,7 +54,7 @@
 
   
 
-- Solution
+- **Solution**
 
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
@@ -63,7 +63,7 @@
 
 
 
-- 고려사항
+- **고려사항**
 
   ```python
       if category_slug:
@@ -97,7 +97,7 @@
 
     ![image4](/README_Folder/image/trouble1111_1.png)
 
-- Solution
+- **Solution**
 
   - cache.get()을 통해 전달받은 쿼리셋을 파이썬 객체로 변환
 
@@ -161,7 +161,7 @@
 
     ![trouble1113](/README_Folder/image/trouble1113_1.png)
 
-- solution
+- **Solution**
 
   - django 2.2 version에 추가된 [bulk](https://docs.djangoproject.com/en/2.2/ref/models/querysets/#bulk-update)를 이용한 OrderWithItem 생성 및 Product.quantity 업데이트
 
@@ -238,7 +238,7 @@
                 list(map(lambda value: partial_zincrby(value=value), ids))
 ```
 
-- solution
+- **Solution**
   - itertools.combination을 이용한 순열 조합을 생성하고 한 번의 순환문(코드 상에서)을 이용해 zincrby 실행
 
 ```python
@@ -263,7 +263,7 @@ def func_b(product_ids):
             print(i)
 ```
 
-- result
+- **Result**
 
   - before: 메모리 측면에서 더 좋은 성능을 보이지만 속도가 느림
 
@@ -282,3 +282,54 @@ def func_b(product_ids):
     - for문을 이용할 때 메모리 증가치가 0인 이유를 확인하지 못함
 
       -> 실제로 메모리 증가가 이루어지지 않는지, 테스트상 오류인지 확인되지 않음
+
+
+
+### Trouble Shooting 
+
+- 일부 객체가 불필요하게 새로 생성된다.
+
+- 메모리에 불필요한 새로운 객체가 지속적으로 할당될 경우 서비스가 적절한 성능을 낼 수 없다.
+
+  **Cart 객체 생성**
+
+  - add, detail, clear, context_processor 동작 시 모두 새로운 Cart 객체가 생성됨
+
+  ![20191212_before_singleton](/README_Folder/image/20191212_before_singleton.png)
+
+  **Recommender 객체 생성**
+
+  - 각 페이지를 이동할 때 마다 Recommender의 객체가 새로 생성됨
+
+  ![20191212_before_single_reco](/README_Folder/image/20191212_before_single_reco.png)
+
+- **Solution**
+
+  - singleton pattern을 이용하여 하나의 identity를 갖는 객체를 생성하여 불필요한 메모리 낭비를 줄일 수 있다.
+
+    ```python
+    class Singleton:
+        _instance = None
+    
+        def __new__(cls, *args):
+            # Cart의 객체인지 확인
+            # 아래 조건문이 True 경우, 새로운 cls._instance 생성 후 반환, False일 경우 None 반환
+            if not isinstance(cls._instance, cls):
+                cls._instance = object.__new__(cls)
+            return cls._instance
+    ```
+
+    - singleton을 구현하는 방법은 여러가지이며 각각 장단점을 갖기 때문에 목적에 따라 구현법을 달리 할 수 있다.
+
+- **Result**
+
+  **Cart 객체 생성**
+
+  ![20191212_after_singleton](/README_Folder/image/20191212_after_singleton.png)
+
+  **Recommend 객체 생성**
+
+  ![20191212_after_single_reco](/README_Folder/image/20191212_after_single_reco.png)
+
+  - 각각 다른 동작을 위해 객체가 생성되더라도 동일한 id값을 갖는다. 
+  - Singleton 패턴이 적용된 객체는 다른 앱에서 해당 객체를 이용해 db나 공유 객체에 접근할 수 없기 때문에 race condition을 해결하기 위한 방법으로도 쓰인다.
