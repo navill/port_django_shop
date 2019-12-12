@@ -7,13 +7,12 @@ from django.conf import settings
 from shop.models import Product
 from shop.pattern_singleton import Singleton
 
-r = redis.StrictRedis(host=settings.REDIS_HOST,
-                      port=settings.REDIS_PORT,
-                      db=settings.REDIS_DB)
-
 
 class Recommend(Singleton):
     def __init__(self):
+        self.r = redis.StrictRedis(host=settings.REDIS_HOST,
+                                   port=settings.REDIS_PORT,
+                                   db=settings.REDIS_DB)
         self.connect_status = False
 
     # @benchmarker_time
@@ -44,17 +43,17 @@ class Recommend(Singleton):
                 # r.zincrby('product', value=product_id, amount=1)
                 # # list로 감싸지 않으면 c_zincrby 동작 x
                 # list(map(c_zincrby, ids))
-                partial_zincrby = partial(r.zincrby, name=f'product:{product_id}', amount=1)
+                partial_zincrby = partial(self.r.zincrby, name=f'product:{product_id}', amount=1)
                 list(map(lambda value: partial_zincrby(value=value), ids))
 
     def suggest_items(self, product_id=None):
         if self.connect_status:
             # in product_detail
             if product_id:
-                items = r.zrange(f'product:{product_id}', 0, -1, desc=True)[:3]
+                items = self.r.zrange(f'product:{product_id}', 0, -1, desc=True)[:3]
             # in product_list
             else:
-                items = r.zrange('product', 0, -1, desc=True)[:3]
+                items = self.r.zrange('product', 0, -1, desc=True)[:3]
             item_ids = [int(item_id) for item_id in items]
             best_items = list(Product.objects.filter(id__in=item_ids))
             # item_ids 순서에 맞게 product object 정렬
