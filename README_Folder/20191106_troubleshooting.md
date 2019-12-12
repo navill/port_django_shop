@@ -1,4 +1,4 @@
-## Trouble Shooting 
+## QuerySet 최적화 - 1
 
 - 짧지만 동일한 쿼리문이 두번 실행됨 
   - cart_detail의 순환문이 실행되면서 product에 대한 쿼리
@@ -42,7 +42,7 @@
 
 
 
-## Trouble Shooting 
+## QuerySet 최적화 - 2
 
 ![image1](/README_Folder/image/trouble1107_1.png)
 
@@ -87,7 +87,7 @@
 
 
 
-## Trouble Shooting 
+## QuerySet 최적화 - 3
 
 - 쿼리셋을 cache에 저장하고, 객체의 속성에 접근 할 때,
 
@@ -131,7 +131,7 @@
 
 
 
-### Trouble Shooting 
+### Bulk를 이용한 쿼리문 처리 
 
 - 많은 양의 제품 결제 시, 불필요한 db 접근과 많은 시간이 걸림
 
@@ -211,7 +211,7 @@
 
       
 
-### Trouble Shooting 
+### itertools.combinations을 이용한 조합 생성 
 
 - 이중 for문을 이용한 구조를 변경하고자 함
 
@@ -239,7 +239,7 @@
 ```
 
 - **Solution**
-  - itertools.combination을 이용한 순열 조합을 생성하고 한 번의 순환문(코드 상에서)을 이용해 zincrby 실행
+  - itertools.combination을 이용한 조합을 생성하고 한 번의 순환문(코드 상에서)을 이용해 zincrby 실행
 
 ```python
 # testcode
@@ -285,7 +285,7 @@ def func_b(product_ids):
 
 
 
-### Trouble Shooting 
+### Singleton을 이용한 불필요한 객체 생성 제한 
 
 - 일부 객체가 불필요하게 새로 생성된다.
 
