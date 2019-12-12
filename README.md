@@ -2,6 +2,8 @@
 
 **django shop**: http://django.navill.shop/
 
+**PPT**: [Google Drive(PDF)](https://drive.google.com/drive/folders/14kPyC-YiVkiWAwtCyo-iArTmNrviWUSz)
+
 ## App 구성
 
 - Shop - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/shop)
