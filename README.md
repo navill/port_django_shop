@@ -25,9 +25,9 @@
 
 ### [TroubleShooting](README_Folder/20191106_troubleshooting.md)
 
-- [QuerySet]([https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#queryset-%EC%B5%9C%EC%A0%81%ED%99%94---1](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#queryset-최적화---1)): 반복적인 데이터 베이스 접근을 해결하고 서비스의 성능을 높이기 위한 QuerySet 최적화
+- [QuerySet](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#queryset-최적화---1): 반복적인 데이터 베이스 접근을 해결하고 서비스의 성능을 높이기 위한 QuerySet 최적화
 
-- [Bulk를 이용한 쿼리문 처리]([https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#bulk%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%BF%BC%EB%A6%AC%EB%AC%B8-%EC%B2%98%EB%A6%AC](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#bulk를-이용한-쿼리문-처리)): 여러 객체를 한꺼번에 생성하거나 업데이트 해야할 경우 반복문이 아닌 bulk 함수를 이용하여 빠른 성능을 구현
-- [itertools.combinations]([https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#itertoolscombinations%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%A1%B0%ED%95%A9-%EC%83%9D%EC%84%B1](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#itertoolscombinations을-이용한-조합-생성))을 이용한 조합 생성: 이중 for 문을 이용한 요소 조합이 아닌 최적화된 built-in 함수를 이용하여 중복되지 않는 요소 조합 생성
-- [Singleton을 이용한 불필요한 객체 생성 제한]([https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#singleton%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%EC%A0%9C%ED%95%9C](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#singleton을-이용한-불필요한-객체-생성-제한)): Singleton 패턴을 이용해 불필요한 객체 생성을 줄임으로써 성능 저하 요소 제거
+- [Bulk를 이용한 쿼리문 처리](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#bulk를-이용한-쿼리문-처리): 여러 객체를 한꺼번에 생성하거나 업데이트 해야할 경우 반복문이 아닌 bulk 함수를 이용하여 빠른 성능을 구현
+- [itertools.combinations](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#itertoolscombinations을-이용한-조합-생성)을 이용한 조합 생성: 이중 for 문을 이용한 요소 조합이 아닌 최적화된 built-in 함수를 이용하여 중복되지 않는 요소 조합 생성
+- [Singleton을 이용한 불필요한 객체 생성 제한](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#singleton을-이용한-불필요한-객체-생성-제한): Singleton 패턴을 이용해 불필요한 객체 생성을 줄임으로써 성능 저하 요소 제거
 
