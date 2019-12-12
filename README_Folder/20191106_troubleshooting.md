@@ -255,7 +255,7 @@ def func_a(product_ids):
 @benchmarker_time
 @profile(precision=4)
 def func_b(product_ids):
-    # 순열 조합 생성
+    # 조합 생성
     li = itertools.combinations(product_ids, len(product_ids) - 1)
     for item2 in li:
         item = set(product_ids) - set(item2)
@@ -332,4 +332,4 @@ def func_b(product_ids):
   ![20191212_after_single_reco](/README_Folder/image/20191212_after_single_reco.png)
 
   - 각각 다른 동작을 위해 객체가 생성되더라도 동일한 id값을 갖는다. 
-  - Singleton 패턴이 적용된 객체는 다른 앱에서 해당 객체를 이용해 db나 공유 객체에 접근할 수 없기 때문에 race condition을 해결하기 위한 방법으로도 쓰인다.
+  - Singleton 패턴이 적용된 객체는 다른 앱에서 객체를 생성하여 db나 공유 객체에 접근할 수 없기 때문에 race condition을 해결하기 위한 방법으로도 쓰인다.
