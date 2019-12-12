@@ -29,7 +29,7 @@ def func_a(product_ids):
 @benchmarker_time
 @profile(precision=4)
 def func_b(product_ids):
-    # 순열 조합 생성
+    # 조합 생성 - 순서를 상관하지않고 중복을 허용하지 않음
     li = itertools.combinations(product_ids, len(product_ids) - 1)
     for item2 in li:
         # a = list(map(lambda x:x*2, product_ids))
