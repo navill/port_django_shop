@@ -5,13 +5,14 @@ import redis
 from django.conf import settings
 
 from shop.models import Product
+from shop.pattern_singleton import Singleton
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
 
 
-class Recommend:
+class Recommend(Singleton):
     def __init__(self):
         self.connect_status = False
 

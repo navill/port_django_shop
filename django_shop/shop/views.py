@@ -8,8 +8,6 @@ from cart.forms import CartForm
 from shop.models import Category, Product
 from shop.recommender import Recommend
 
-r = Recommend()
-
 
 def product_list(request, category_slug=None):
     category = None
@@ -45,6 +43,7 @@ def product_list(request, category_slug=None):
         products = [product for product in products]
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
+    r = Recommend()
     try:
         r.connect_status = True
         suggested_items = r.suggest_items()
@@ -60,6 +59,7 @@ def product_list(request, category_slug=None):
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     cart_form = CartForm()
+    r = Recommend()
     try:
         r.connect_status = True
         suggested_items = r.suggest_items(product_id=id)

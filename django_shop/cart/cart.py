@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.core import serializers
 
 from shop.models import Product
+from shop.pattern_singleton import Singleton
 
 
-class Cart:
+class Cart(Singleton):
     def __init__(self, request):
         self.session = request.session
         # session.get(): 세션에 구성된 데이터의 키값이 숫자일 경우 문자열로 변환되어 전달된다.
