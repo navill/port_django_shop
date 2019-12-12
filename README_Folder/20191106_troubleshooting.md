@@ -305,6 +305,8 @@ def func_b(product_ids):
 
 - **Solution**
 
+  - Cart는 session에서, Recommend는 Redis에서 데이터를 불러와서 처리하기 때문에 동작마다 새로운 객체를 생성할 필요가 없다.
+
   - singleton pattern을 이용하여 하나의 identity를 갖는 객체를 생성하여 불필요한 메모리 낭비를 줄일 수 있다.
 
     ```python
