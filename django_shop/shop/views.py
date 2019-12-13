@@ -45,12 +45,10 @@ def product_list(request, category_slug=None):
     products = paginator.get_page(page)
     r = Recommend()
     try:
-        r.connect_status = True
         suggested_items = r.suggest_items()
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
-    r.connect_status = False
     return render(request, 'shop/product/list.html',
                   {'categories': categories, 'category': category, 'products': products,
                    'suggested_items': suggested_items})
@@ -61,7 +59,6 @@ def product_detail(request, p_id):
     cart_form = CartForm()
     r = Recommend()
     try:
-        r.connect_status = True
         suggested_items = r.suggest_items(product_id=p_id)
     except Exception as e:
         suggested_items = None
