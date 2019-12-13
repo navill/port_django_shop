@@ -9,7 +9,6 @@ from shop.recommender import Recommend
 
 
 def create_order(request):
-    r = Recommend()
     cart = Cart(request)
     # 'if cart.products:' 를 별도로 구성하여 '장바구니가 비었습니다' 안내 페이지로 이동시킬 수 있음
     # 현재 구성은 장바구니가 비어있을 경우, 빈 폼 로드
@@ -39,15 +38,13 @@ def create_order(request):
             # bulk_update를 이용한 Product.quantity 업데이트(release version2.2)
             products.bulk_update(product_bulk.values(), ['quantity'])
             # 함께 구매한 아이템 등록
+            r = Recommend()
             try:
-                r.connect_status = True
                 r.buy_item(products)
             except Exception as e:
                 print(f'not connect redis:{e}')
-
             # 주문 완료 시, 장바구니(session) 비우기
             cart.clear_session()
-            r.connect_status = False
             return render(request, 'order/created.html', {'order': order})
         else:
             pass

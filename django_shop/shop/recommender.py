@@ -42,7 +42,6 @@ class Recommend(Singleton):
             # # list로 감싸지 않으면 c_zincrby 동작 x -> lazy evaluation
             # list(map(c_zincrby, ids))
             partial_zincrby = partial(self.r.zincrby, name=f'product:{product_id}', amount=1)
-            print(partial_zincrby)
             list(map(lambda value: partial_zincrby(value=value), ids))
 
     def suggest_items(self, product_id=None):

@@ -63,6 +63,5 @@ def product_detail(request, p_id):
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
-    r.connect_status = False
     return render(request, 'shop/product/detail.html',
                   {'product': product, 'cart_form': cart_form, 'suggested_items': suggested_items})
