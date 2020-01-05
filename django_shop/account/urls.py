@@ -16,7 +16,6 @@ urlpatterns = [
     # edit info
     path('edit/', views.edit_user, name='edit'),
     path('register/', views.register_user, name='register'),
-
     # history
     path('history/', views.get_history, name='history'),
 ]

@@ -4,36 +4,140 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Online Shop{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <style>
+		.bg-cfe {
+			background-color: #007cae;
+		}
+
+
+    </style>
+    <style type="text/css">
+		#floatdiv {
+			position: fixed;
+			width: 170px;
+			height: 50px;
+			display: inline-block;
+			right: 30px;
+			/* 창에서 오른쪽 길이 */
+			top: 10%;
+			/* 창에서 위에서 부터의 높이 */
+			background-color: transparent;
+			margin: 0;
+		}
+
+
+    </style>
 </head>
-<body style="text-align:center;">
-<div id="header">
-    <a href="{% url 'shop:product_list' %}" class="logo" style="font-size: 30px; color: #4c8a46;">Django shop</a></div>
-    <div>
-        {% if request.user.is_authenticated %}
-        <div class='user_name'>
-            <p>Hi {{ request.user.first_name }}</p>
+
+<body>
+<!-- Navbar start -->
+<div class='container-fluid bg-cfe'>
+    <nav class="navbar container mb-3 rounded-bottom navbar-expand-lg navbar-dark bg-cfe">
+
+        <a class="navbar-brand" href="#">OnlineShop</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <form class="form-inline my-2 my-lg-0" method='GET' action=''>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-primary my-2 my-sm-0" value='' type="submit">Search</button>
+            </form>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+
+
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color: white;">Welcom {{ request.user.username }}!!</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style='width: 199px;'>
+                        <form class='navbar-form mx-2' method='POST' action='{% url "login" %}'>
+                            {% csrf_token %}
+                            <div class='form-group mb-1'>
+                                <input type='text' class='form-control' name='username' placeholder='Username'
+                                       autocomplete="off"/>
+                            </div>
+                            <div class='form-group mb-1'>
+                                <input type='password' class='form-control' name='password' placeholder='Password'
+                                       autocomplete="off"/>
+                            </div>
+                            <button type='submit' class='btn btn-primary btn-block'>Login</button>
+                        </form>
+                        <p class='text-center my-2'>
+                            <a href=''>Register</a>
+                        </p>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+
         </div>
-        <div class="user">
-            {% if request.user.is_staff %}
-            <a href="{% url 'history' %}">History</a>
-            {% else %}
-            <a href="{% url 'edit' %}">Edit profile</a>
-            <a href="{% url 'password_change' %}">Change Password</a>
-            {% endif %}
-            <a href="{% url 'logout' %}">Log-out</a>
+    </nav>
+</div>
+<!-- Navbar End -->
+<!-- Container start -->
+<div class='container-fluid'>
+    <!--row start-->
+    <div class='row'>
+        <!-- left side col start-->
+        <div class='col-2'>
+
         </div>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-        {% endif %}
+        <!-- left side col end-->
+
+        <!--main col start-->
+        <div class='col-8'>
+            {% block content %}
+
+
+            {% endblock %}
+        </div>
+        <!--main col end-->
+
+
+
+        <!--right side col end-->
     </div>
-{% block content %}
-{% endblock %}
+    <!--row end-->
+</div>
+<!--container end-->
+<!-- Footer start -->
+<div class='footer container-fluid mb-0 bg-secondary text-dark text-left mt-5'>
+    <div class='container'>
+        <div class='row py-5'>
+            <div class='col-12 py-5'>
+                <h1 class='display-5'>Footer</h1>
+                <p class='lead'>Sub Footer.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

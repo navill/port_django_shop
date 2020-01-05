@@ -10,4 +10,5 @@ urlpatterns = [
     path('shop/product/<int:p_id>/', views.product_detail, name='product_detail'),
     # path('', cache_page(60 * 15)(views.product_list), name='product_list'),
     path('', views.product_list, name='product_list'),
+    path('home/', views.home, name='home'),
 ]

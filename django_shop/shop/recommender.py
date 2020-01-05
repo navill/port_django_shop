@@ -34,25 +34,25 @@ class Recommend(Singleton):
 
         for ids in com_ids:
             product_id = list(set(product_ids) - set(ids))
-            # product_ids와 순열 조합의 크기는 1만큼 차이나기때문에 항상 len(product_id)는 1이다
-            product_id = int(product_id[0])
+            # product_ids와 조합의 크기는 1만큼 차이나기때문에 항상 len(product_id)는 1이다
+            main_product_id = int(product_id[0])
             # value를 제외한 인수 고정
             # c_zincrby = partial(custom_zincrby, name=f'product:{product_id}', amount=1)
             # r.zincrby('product', value=product_id, amount=1)
             # # list로 감싸지 않으면 c_zincrby 동작 x -> lazy evaluation
             # list(map(c_zincrby, ids))
-            partial_zincrby = partial(self.r.zincrby, name=f'product:{product_id}', amount=1)
+            partial_zincrby = partial(self.r.zincrby, name=f'product:{main_product_id}', amount=1)
             list(map(lambda value: partial_zincrby(value=value), ids))
 
     def suggest_items(self, product_id=None):
         # in product_detail
         if product_id:
-            items = self.r.zrange(f'product:{product_id}', 0, -1, desc=True)[:3]
+            items = self.r.zrange(f'product:{product_id}', 0, -1, desc=True)[:6]
         # in product_list
         else:
-            items = self.r.zrange('product', 0, -1, desc=True)[:3]
+            items = self.r.zrange('product', 0, -1, desc=True)[:6]
         item_ids = [int(item_id) for item_id in items]
         best_items = list(Product.objects.filter(id__in=item_ids))
-        # item_ids 순서에 맞게 product object 정렬
+        # item_ids 순서에 맞게 product object 정렬 -> shuffle로 변경
         best_items.sort(key=lambda b: item_ids.index(b.id))
         return best_items

@@ -17,6 +17,10 @@ def benchmarker_time(org_func):
 
 
 product_ids = range(100)
+print(product_ids)
+for i in product_ids:
+    print(i)
+
 
 @benchmarker_time
 @profile(precision=4)
@@ -25,6 +29,7 @@ def func_a(product_ids):
         for item2 in product_ids:
             if item != item2:
                 print(item2)
+
 
 @benchmarker_time
 @profile(precision=4)
@@ -35,12 +40,14 @@ def func_b(product_ids):
         # a = list(map(lambda x:x*2, product_ids))
         item = set(product_ids) - set(item2)
         result = list(map(lambda item: item, item2))
-    print(result)
+        print(result)
+
 
 # func_a(product_ids)
-func_b(product_ids)
-# def func2(x):
-#     print(x)
-#
-# a = list(map(lambda elem: func2(elem), [1,2,3,4,5]))
-# print(a)
+# func_b(product_ids)
+
+li = ['a', 'b', 'c']
+iter_li = itertools.combinations(li, len(li)-1)
+print(iter_li)
+for i in iter_li:
+    print(i)

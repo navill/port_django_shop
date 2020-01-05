@@ -24,10 +24,11 @@ urlpatterns = [
     path('cart/', include('cart.urls', namespace='cart')),
     path('order/', include('order.urls', namespace='order')),
     path('account/', include('account.urls')),
-]
-if settings.DEBUG:
-    import debug_toolbar
 
-    # urlpatterns += static(settings.MEDIA_URL,
-    #                       document_root=settings.MEDIA_ROOT)
-    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns
+]
+# if settings.DEBUG:
+#     import debug_toolbar
+#
+#     # urlpatterns += static(settings.MEDIA_URL,
+#     #                       document_root=settings.MEDIA_ROOT)
+#     urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns

@@ -5,6 +5,7 @@ from django.urls import reverse
 
 
 class Category(models.Model):
+    category_type = models.ForeignKey('self', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
 

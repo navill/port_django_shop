@@ -9,6 +9,16 @@ from shop.models import Category, Product
 from shop.recommender import Recommend
 
 
+def home(request):
+    """
+    context data
+    products
+    category + sub category
+    cart
+    """
+    return render(request, template_name='shop/main.html', context={'form':None})
+
+
 def product_list(request, category_slug=None):
     category = None
     category_all = Category.objects.all()
