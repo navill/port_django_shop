@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from shop.models import Category, SubCategory, Product
+from shop.models import Category, SubCategory, Product, ProductImage
 
 
 @admin.register(Category)
@@ -19,6 +19,12 @@ class SubCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 0
+    max_num = 10
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['category', 'name', 'price', 'created', 'updated', 'quantity', 'available']
@@ -26,3 +32,7 @@ class ProductAdmin(admin.ModelAdmin):
     # admin에서 사용될 default filter
     list_filter = ['available', 'created', 'updated']
     list_editable = ['available', 'price', 'quantity']
+
+    inlines = [
+        ProductImageInline
+    ]

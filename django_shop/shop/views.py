@@ -17,29 +17,21 @@ def home(request):
         suggested_items = None
         print(f'not connect redis:{e}')
 
-    data = list()
-    data2 = dict()
+    data = dict()
     categories = Category.objects.all()
-    print(categories)
     for cat in categories:
-        data2[cat] = SubCategory.objects.filter(parent_category=cat)
+        data[cat] = SubCategory.objects.filter(parent_category=cat)
 
-    print(data2)
-        # print(sub_cats)
-    # subcategories = SubCategory.objects.all()
-
-    # subcats = cat.values()
-    # for subcat in subcats:
-    #     print(dir(subcat))
-    # print(cat.subcategory_set.instance)
-    # print(dir(cat.subcategory_set))
-    # 'sub_categories': sub_categories,
     return render(request, template_name='shop/main.html',
-                  context={'categories': categories, 'data': data2,
-                           'suggested_items': suggested_items})
+                  context={'data': data, 'suggested_items': suggested_items})
 
 
 def product_list(request, category_slug=None):
+    """
+
+    Cache
+
+
     category = None
     category_all = Category.objects.all()
     product_all = Product.objects.all()
@@ -57,16 +49,19 @@ def product_list(request, category_slug=None):
         if products is None:
             products = product_all
             categories = category_all
-
+    """
     page = request.GET.get('page')
+    products = Product.objects.all()
     # product list에서 category를 선택했을 경우
+    category = None
     if category_slug:
+        category = SubCategory.objects.get(slug=category_slug)
         # category = get_object_or_404(Category, slug=category_slug)
         # category = categories.get(slug=category_slug) -> get()에 의해 db 접근
-        for cat in categories:
-            if cat.slug == category_slug:
-                category = cat
-                break
+        # for cat in categories:
+        #     if cat.slug == category_slug:
+        #         category = cat
+        #         break
         # raise query
         products = products.filter(category=category)
         # python 객체로 변환하여, 한 번의 db 접근으로 pagination 및 template에서 사용
@@ -79,8 +74,10 @@ def product_list(request, category_slug=None):
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
+    test = Product.objects.get(id=1)
+    print(test.get_image_url)
     return render(request, 'shop/product/list.html',
-                  {'categories': categories, 'category': category, 'products': products,
+                  {'category': category, 'products': products, 'test': test,
                    'suggested_items': suggested_items})
 
 

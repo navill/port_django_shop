@@ -1,7 +1,9 @@
 from django.contrib import admin
 
 from order.models import Order, OrderWithItem
+
 admin.site.index_template = 'memcache_status/admin_index.html'
+
 
 # Register your models here.
 class OrderWithItemInline(admin.TabularInline):
