@@ -1,12 +1,13 @@
 {% extends "shop/base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
-Your shopping cart
+Shopping cart
 {% endblock %}
 
 {% block content %}
-{% if cart|length > 0 %}
+{% if cart.products|length >= 1 %}
 <h1>Your shopping cart</h1>
 {% else %}
 <h1>Your shopping cart is empty</h1>
@@ -60,9 +61,8 @@ Your shopping cart
     {% endfor %}
     <!--info end-->
 
-    <div class='col mt-4'>
-        <p>Total price: {total_price}</p>
-        <p>Total price: {total_price}</p>
+    <div class='col mt-4 text-right'>
+        <p>Total price: {{ cart.get_total_price | intcomma }}원</p>
     </div>
 </div>
 <p class="text-right">

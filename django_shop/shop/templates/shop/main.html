@@ -1,7 +1,28 @@
 {% extends 'shop/base.html' %}
+{% load static %}
+
+
 {% block title %}Main{% endblock %}
 
+
+
+
 {% block content %}
+
+<style>
+.jumbotron {
+	background-image: url("{% static 'img/online_shop.png' %}");
+	background-size: cover;
+	background-position-y: -154px;
+
+}
+.lead {
+    font-size: 2.25rem;
+    font-weight: 300;
+}
+</style>
+
+
 
 <!-- jumbotron start -->
 <div class="jumbotron display-2 pt-3 pb-3" style="height: 320px;">
@@ -19,26 +40,26 @@
             <div class="carousel-item active">
                 <div class='row text-center px-5'>
                     <div class='col-9 mx-auto'>
-                        <h1 class="text-center">Welcome to django-shop</h1>
+                        <h1 class="text-center" style="font-size: 70px;">Welcome to Online Shop</h1>
                         <!--                        <hr class="my-4">-->
-                        <p class="lead">product.short_description</p>
+                        <h2 class="lead">This site is jihoon's Toy Prjoect</h2>
                         <!--                        <a class="btn btn-primary btn mx-left" href="#" role="button">Learn more</a>-->
                     </div>
                 </div>
             </div>
 
-            {% for suggested_item in suggested_items %}
             <div class="carousel-item">
                 <div class='row text-center px-5'>
                     <div class='col-9 mx-auto'>
-                        <h1 class="text-center">{{ suggested_item }}</h1>
+                        <h1 class="text-center" style="font-size:70px;">
+                            <p>Link: <a href="https://github.com/navill/port_django_shop">GitHub</a></p>
+                        </h1>
                         <hr class="my-4">
-                        <p class="lead">product.short_description</p>
-                        <a class="btn btn-primary btn mx-left" href="#" role="button">Learn more</a>
+                        <p class="lead">Detail source code about this site</p>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+
         </div>
 
         <!--previous-->

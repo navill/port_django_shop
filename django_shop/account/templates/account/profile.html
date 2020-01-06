@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+{% block title %}Your Profile{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-7 display-5" style="height: 46vh;">
+    <h1>Update profile</h1>
+    <form action="{% url 'profile' %}" method="post">
+        {{ profile_form.as_p }}
+        {% csrf_token %}
+        <p><input class='btn btn-primary mt-4' type="submit" value="Update profile"></p>
+    </form>
+</div>
+{% endblock %}

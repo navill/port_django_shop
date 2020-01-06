@@ -8,6 +8,8 @@ from django.db import models
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     birth = models.DateField(blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    postal_code = models.CharField(max_length=255, blank=True, null=True)
 
 
 class Action(models.Model):

@@ -57,14 +57,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
+
 
 
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: white;">Welcom {{ request.user.username }}!!</a>
+                    <a class="nav-link" href="{% url 'profile' %}" style="color: white;">Welcom {{ request.user.username }}!!</a>
                 </li>
 
                 <li class="nav-item">

@@ -1,4 +1,5 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
@@ -6,11 +7,13 @@ from django.shortcuts import render, redirect
 # Create your views here.
 # 유저 등록
 from account.actions import track_action
-from account.forms import UserRegistrationForm, UserEditForm
+from account.forms import UserRegistrationForm, UserEditForm, UserProfileForm
 # user 정보 변경
 # edit이 실행되기 위해 인증이 미리 이루어져야 하기 때문에 @login_required를 사용
 from account.models import Action
 
+
+User = get_user_model()
 
 @login_required
 def edit_user(request):
@@ -61,3 +64,21 @@ def get_history(request):
 def change_password_done(request):
     track_action(request.user, 'has changed password')
     return render(request, 'registration/password_change_done.html')
+
+
+@login_required
+def user_profile(request):
+    user = User.objects.get(id=request.user.id)
+    print(user.profile.user_id)
+    if request.method == 'POST':
+        profile_form = UserProfileForm(instance=user.profile, data=request.POST)
+        # profile_form = None
+        if profile_form.is_valid():
+            profile_form = profile_form.save(commit=False)
+            # profile_form
+            profile_form.save()
+            track_action(profile_form.user, 'has updated profile')
+        return render(request, 'account/profile_done.html')
+    else:
+        profile_form = UserProfileForm(instance=user.profile)
+        return render(request, 'account/profile.html', {'profile_form': profile_form})

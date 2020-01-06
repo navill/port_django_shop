@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from account.models import Profile
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -62,3 +64,13 @@ class UserEditForm(forms.ModelForm):
             raise forms.ValidationError('Email is duplicated.')
         else:
             return cd['email']
+
+
+class UserProfileForm(forms.ModelForm):
+    # user = forms.CharField(widget=forms.HiddenInput())
+    address = forms.CharField(widget=forms.Textarea(attrs={'style': 'width: 500px; height: 30px'}))
+    postal_code = forms.CharField(widget=forms.Textarea(attrs={'style': 'width: 500px; height: 30px'}))
+
+    class Meta:
+        model = Profile
+        fields = ('address', 'postal_code')
