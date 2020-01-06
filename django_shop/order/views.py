@@ -1,4 +1,5 @@
 # Create your views here.
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
 from account.actions import track_action
@@ -49,5 +50,11 @@ def create_order(request):
         else:
             pass
     else:
-        form = OrderForm()
+        User = get_user_model()
+        user = User.objects.get(id=request.user.id)
+
+        form = OrderForm(
+            initial={'first_name': user.first_name, 'last_name': user.last_name, 'address': user.profile.address,
+                     'post_code': user.profile.postal_code})
+        print(form['address'])
         return render(request, 'order/create.html', {'cart': cart, 'form': form})

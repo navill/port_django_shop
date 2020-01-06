@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Checkout</h1>
-<div class="order-content">
+<div class="col-7 display-5 mx-auto" style="height: 46vh;">
     <div class="order-list">
         <form class='create-order' action="." method="post">
             {{ form.as_p }}
@@ -25,8 +25,7 @@
         <div>
             <p class="total-price">total: {{cart.get_total_price }}원</p>
         </div>
+
     </div>
-
 </div>
-
 {% endblock %}
