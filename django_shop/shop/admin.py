@@ -1,11 +1,18 @@
 from django.contrib import admin
 
 # Register your models here.
-from shop.models import Category, Product
+from shop.models import Category, SubCategory, Product
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    # key 값에 해당하는 필드를 value 값을 기준으로 자동 생성
+    # -> slug field는 자동으로 name필드에 의해 생성
+    prepopulated_fields = {'slug': ('name',)}
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     # key 값에 해당하는 필드를 value 값을 기준으로 자동 생성
     # -> slug field는 자동으로 name필드에 의해 생성

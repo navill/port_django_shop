@@ -5,18 +5,38 @@ from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
 from cart.forms import CartForm
-from shop.models import Category, Product
+from shop.models import Category, Product, SubCategory
 from shop.recommender import Recommend
 
 
 def home(request):
-    """
-    context data
-    products
-    category + sub category
-    cart
-    """
-    return render(request, template_name='shop/main.html', context={'form':None})
+    r = Recommend()
+    try:
+        suggested_items = r.suggest_items()
+    except Exception as e:
+        suggested_items = None
+        print(f'not connect redis:{e}')
+
+    data = list()
+    data2 = dict()
+    categories = Category.objects.all()
+    print(categories)
+    for cat in categories:
+        data2[cat] = SubCategory.objects.filter(parent_category=cat)
+
+    print(data2)
+        # print(sub_cats)
+    # subcategories = SubCategory.objects.all()
+
+    # subcats = cat.values()
+    # for subcat in subcats:
+    #     print(dir(subcat))
+    # print(cat.subcategory_set.instance)
+    # print(dir(cat.subcategory_set))
+    # 'sub_categories': sub_categories,
+    return render(request, template_name='shop/main.html',
+                  context={'categories': categories, 'data': data2,
+                           'suggested_items': suggested_items})
 
 
 def product_list(request, category_slug=None):

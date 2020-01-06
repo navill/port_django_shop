@@ -1,125 +1,85 @@
 {% extends 'shop/base.html' %}
 
-{% load static %}
 {% load humanize %}
 
 {% block title %}
     {% if category %}
         {{ category.name }}
-    {% else %}
-        Products
     {% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="category-list">
-    <h1>{% if category %}
-            {{ category.name }}
-        {% else %}
-            All Products
-        {% endif %}</h1>
-    <div id="menu">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{% url 'shop:product_list' %}">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% for cat in categories %}
-                    <li class="nav-item
-                    {% if cat == category %}
-                        active
-                    {% else %}
-                        disabled
-                    {% endif %}">
-                        <a class="nav-link" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </nav>
-    </div>
-
-    <div id="product-list" style="width: 1200px;">
-        <main role="main">
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row">
-                        {% for product in products %}
-                            <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <a href="{{ product.get_absolute_url }}">
-                                    <img src="{% if product.image %}
-                                        {{ product.image.url }}
-                                    {% else %}
-                                        {% static 'img/no_image.png' %}
-                                    {% endif %}" width="348px;" height="225px">
-                                </a>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <a href="{{ product.get_absolute_url }}">
-                                            {{ product.name }}
-                                        </a>
-                                    </p>
-                                    <p class="card-text">{{ product.price|intcomma }}원</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <!--<div class="btn-group">-->
-                                            <!--<button type="button" class="btn btn-primary btn-lg">Detail</button>-->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-    <div id="cart-list">
-        <!--cart - product.name, quantity-->
-        <ul>
-            {% if cart.cart %}
-                {% for item in cart %}
-                <li>
-                    <a href="{% url 'cart:cart_detail' %}"><p>{{ item.product.name }}: {{ item.quantity }}개</p></a>
-                </li>
-                {% endfor %}
-                <li>
-                    <a href="{% url 'cart:clear_cart' %}">Clear</a>
-                </li>
-            {% else %}
-                <li><p>cart is empty</p></li>
-            {% endif %}
-        </ul>
-
-    </div>
-    <div id="best-seller">
-        <p>Best-Seller Products</p>
-        <ol start="1">
-            {% for suggested_item in suggested_items %}
-            <li>{{suggested_item}}</li>
-            {% endfor %}
-        </ol>
-    </div>
-    <div class="pagination">
-    <span class="step-links">
-        {% if products.has_previous %}
-            <a href="?page=1">first</a>
-            <a href="?page={{ products.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ products.number }} of {{ products.paginator.num_pages }}.
-        </span>
-
-        {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}">next</a>
-            <a href="?page={{ products.paginator.num_pages }}">last</a>
-        {% endif %}
-    </span>
+<div>
+    <h1 class='col text-center mt-4 '>Recommend</h1>
 </div>
+
+<!--card colums start-->
+<div class="card-columns">
+
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card bg-primary text-white text-center p-3">
+        <blockquote class="blockquote mb-0">
+            <p>Center</p>
+            <footer class="blockquote-footer text-white">
+                <small>
+                    Someone famous in <cite title="Source Title">Source Title</cite>
+                </small>
+            </footer>
+        </blockquote>
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">product.title</h5>
+            <p class="card-text">product.description</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
 </div>
+<!--card colums end-->
+
+{% include "shop/sidebar.html" with product=product %}
+
 {% endblock %}
