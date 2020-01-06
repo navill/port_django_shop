@@ -11,22 +11,20 @@
                         <a href="{% url 'cart:cart_detail' %}"><p>{{ item.product.name }}: {{ item.quantity }}</p></a>
                     </li>
                     {% endfor %}
-                    <li>
 
-                    </li>
                     {% else %}
                     <li><p>cart is empty</p></li>
                     {% endif %}
                 </ul>
-                <p class="card-title mb-1">product.title
-                    <!--url 'cart:cart_detail'-->
-                    <a href="">Clear</a>
-                </p>
-
-            </div>
-            <div class="card-body px-0 py-1 mx-auto ">
-                <a href="{% url 'cart:cart_detail' %}" class="btn btn-primary card-link">Cart</a>
-                <a href="#" class="btn btn-primary card-link">Buy</a>
+                <div class="container-fluid">
+                    <div class="row">
+                        <a class="mb-2 mt-5" href="{% url 'cart:cart_clear' %}">Cart Clear</a>
+                    </div>
+                    <div class="row">
+                        <a href="{% url 'cart:cart_detail' %}" class="btn btn-primary card-link">Cart</a>
+                        <a href="#" class="btn btn-primary card-link">Buy</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

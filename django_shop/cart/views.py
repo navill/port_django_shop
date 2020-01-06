@@ -18,12 +18,12 @@ def cart_add(request, product_id):
     # is_update: determine whether it will be updated
     #     -> it is only 'True' when cart_detail works
     form = CartForm(request.POST)
-
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], is_update=cd['is_update'])
+        print(cd['is_update'])
     else:
-        pass
+        cart.add(product=product, quantity=1, is_update=False)
     return redirect('cart:cart_detail')
 
 
@@ -42,11 +42,13 @@ def cart_detail(request):
         # quantity 및 is_update 데이터를 담고 있는 폼을 cart-session에 저장
         # item = {'1':{'quantity': 1, 'price': 10, cartform:<..., fields = (quantity, is_update)>}}
         item['cart_form'] = CartForm(initial={'quantity': item['quantity'], 'is_update': True})
+        # print(item['cart_form'])
     return render(request, 'cart/detail.html', {'cart': cart})
 
 
 def cart_clear(request):
     cart = Cart(request)
+
     # print('id(cart) in cart_clear:', id(cart))
     cart.clear_cart()
-    return redirect('shop:product_list')
+    return redirect(request.META['HTTP_REFERER'])

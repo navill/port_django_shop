@@ -70,8 +70,14 @@
             </div>
             <div class="list-group list-group-flush">
                 {% for sub_cat in subcategories %}
-                <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item list-group-item-action">{{ sub_cat.name }}<span
+
+                {% if sub_cat.items >= 1%}
+                    <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item list-group-item-action">{{ sub_cat.name }}<span
                         class="badge badge-secondary ml-3">{{ sub_cat.items }}</span></a>
+                {% else %}
+                    <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item list-group-item-action disabled">{{ sub_cat.name }}<span
+                        class="badge badge-secondary ml-3">{{ sub_cat.items }}</span></a>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>

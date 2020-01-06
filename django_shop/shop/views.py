@@ -21,16 +21,15 @@ def home(request):
     categories = Category.objects.all()
     for cat in categories:
         data[cat] = SubCategory.objects.filter(parent_category=cat)
-
+    featured_item = ['a']
+    featured_item = ['a']
     return render(request, template_name='shop/main.html',
                   context={'data': data, 'suggested_items': suggested_items})
 
 
 def product_list(request, category_slug=None):
     """
-
-    Cache
-
+    Cache - 보류
 
     category = None
     category_all = Category.objects.all()
@@ -50,6 +49,7 @@ def product_list(request, category_slug=None):
             products = product_all
             categories = category_all
     """
+    cart_form = CartForm()
     page = request.GET.get('page')
     products = Product.objects.all()
     # product list에서 category를 선택했을 경우
@@ -74,10 +74,8 @@ def product_list(request, category_slug=None):
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
-    test = Product.objects.get(id=1)
-    print(test.get_image_url)
     return render(request, 'shop/product/list.html',
-                  {'category': category, 'products': products, 'test': test,
+                  {'category': category, 'products': products,
                    'suggested_items': suggested_items})
 
 

@@ -17,11 +17,25 @@
 <div class="card-columns">
     {% for product in products%}
     <div class="card">
+        {% if product.get_image_url %}
         <img src="{{ product.get_image_url }}" class="card-img-top">
+        {% else %}
+        <img src="{% static 'img/no_image.png' %}" class="card-img-top">
+        {% endif %}
         <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-            <p class="card-text"><small class="text-muted">{{ product.price | intcomma}} 원</small></p>
+            <div class="col">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description | truncatewords:5 }}</p>
+                <div class="row">
+                    <p class="card-text mx-auto"><small class="text-muted">{{ product.price | intcomma}} 원</small></p>
+                    <a class="btn btn-primary" style='height: 38px;' href="{{ product.get_absolute_url }}">Detail</a>
+
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-primary ml-1" type="submit" value="Cart">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     {% endfor %}
