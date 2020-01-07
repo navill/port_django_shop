@@ -3,12 +3,25 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="col-7 display-5" style="height: 46vh;">
-    <h1>Update profile</h1>
-    <form action="{% url 'profile' %}" method="post">
-        {{ profile_form.as_p }}
-        {% csrf_token %}
-        <p><input class='btn btn-primary mt-4' type="submit" value="Update profile"></p>
-    </form>
+<div class="row">
+    <div class="col-6" style="height: 46vh;">
+        <h1>Update profile</h1>
+        <form action="{% url 'profile' %}" method="post">
+            {{ profile_form.as_p }}
+            {% csrf_token %}
+            <p><input class='btn btn-primary mt-4' type="submit" value="Update profile"></p>
+        </form>
+    </div>
+    <div class="col-5 mx-auto">
+        <div class="list-group">
+            <p class="list-group-item active">Purchase Record</p>
+
+            {% for user_order in user_orders%}
+            <a href="{% url 'order:order' user_order.id%}" class="list-group-item list-group-item-action">#{{user_order.id}}: {{ user_order.created }}</a>
+            {% endfor %}
+
+        </div>
+
+    </div>
 </div>
 {% endblock %}

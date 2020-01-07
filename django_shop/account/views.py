@@ -11,7 +11,7 @@ from account.forms import UserRegistrationForm, UserEditForm, UserProfileForm
 # user 정보 변경
 # edit이 실행되기 위해 인증이 미리 이루어져야 하기 때문에 @login_required를 사용
 from account.models import Action
-
+from order.models import Order
 
 User = get_user_model()
 
@@ -81,4 +81,5 @@ def user_profile(request):
         return render(request, 'account/profile_done.html')
     else:
         profile_form = UserProfileForm(instance=user.profile)
-        return render(request, 'account/profile.html', {'profile_form': profile_form})
+        user_orders = Order.objects.filter(user=request.user)
+        return render(request, 'account/profile.html', {'profile_form': profile_form, 'user_orders': user_orders})

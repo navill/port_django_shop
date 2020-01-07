@@ -1,10 +1,51 @@
 {% extends 'shop/base.html' %}
+{% load humanize %}
 
 {% block title %}Thank you{% endblock %}
 
 {% block content %}
 
 
-<p>Order Number:<a href="">#{{ order.id }}</a></p>
-<p>Thank you for your purchase.</p>
+<div class='container'>
+    <h1>Thank you for your purchase</h1>
+
+    <h2>Purchase List</h2>
+    <h3>Order Number: #{{ order.id }}</h3>
+    <h3>Buyer Information</h3>
+    <p>name: {{ order.first_name }}, {{ order.last_name }}</p>
+    <p class='mt-3'>Address: {{order.address}} </p>
+    <p class='mb-5'>Post Code: {{order.post_code}} </p>
+    <!--info start-->
+    <div class='row'>
+        <div class='col-3 mx-auto'>
+            <h5>Product</h5>
+        </div>
+        <div class='col-3'>
+            <h5>Quantity</h5>
+        </div>
+        <div class='col-3 text-right'>
+            <h5>Price</h5>
+        </div>
+    </div>
+
+    {% for order_item in order_items%}
+    <div class='row'>
+        <div class='col-3 mx-auto'>
+            <h5>{{ order_item.item }}</h5>
+        </div>
+        <div class='col-3'>
+            <h5>{{ order_item.quantity }}</h5>
+        </div>
+        <div class='col-3 text-right'>
+            <h5>{{ order_item.price | intcomma }} 원</h5>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class='col mt-4 text-right'>
+        <p>Total price: {{ order.total_price | intcomma }} 원</p>
+    </div>
+</div>
+
+
 {% endblock %}

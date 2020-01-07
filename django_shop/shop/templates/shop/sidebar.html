@@ -4,19 +4,17 @@
     <div id="floatdiv">
         <div class="card mx-auto mb-1">
             <div class="card-body px-2">
-                <ul>
+                <div class="container">
                     {% if cart.cart %}
                     {% for item in cart %}
-                    <li>
-                        <a href="{% url 'cart:cart_detail' %}"><p>{{ item.product.name }}: {{ item.quantity }}</p></a>
-                    </li>
+                    <a href="{% url 'cart:cart_detail' %}"><p>{{ item.product.name }}: {{ item.quantity }}</p></a>
                     {% endfor %}
 
                     {% else %}
-                    <li><p>cart is empty</p></li>
+                    <p>cart is empty</p>
                     {% endif %}
-                </ul>
-                <div class="container-fluid">
+                </div>
+                <div class="container">
                     <div class="row">
                         <a class="mb-2 mt-5" href="{% url 'cart:cart_clear' %}">Cart Clear</a>
                     </div>

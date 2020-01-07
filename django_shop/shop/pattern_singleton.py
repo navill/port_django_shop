@@ -1,5 +1,6 @@
 class Singleton:
     instance = None
+
     # Cart의 경우 입력된 매개변수(request)가 반영되어야 한다.
     # request를 요청한 사용자마다 다른 request.session을 사용해야 한다.
     def __new__(cls, *args, **kwargs):
