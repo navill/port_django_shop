@@ -54,7 +54,7 @@ Shopping cart
             </form>
         </div>
         <div class='col-4 text-right'>
-            <h5>Unit Price</h5>
+            <h5>{{ product.price | intcomma }} 원</h5>
         </div>
     </div>
     {% endwith %}
@@ -66,7 +66,7 @@ Shopping cart
     </div>
 </div>
 <p class="text-right">
-    <a href="{% url 'shop:product_list' %}" class="button mr-5">
+    <a href="{{ request.META.HTTP_REFERER }}" class="button mr-5">
         Continue shopping</a>
     <a href="{% url 'order:create_order' %}" class="button">
         Checkout</a>

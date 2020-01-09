@@ -13,6 +13,7 @@
 		}
 
 
+
     </style>
     <style type="text/css">
 		#floatdiv {
@@ -32,6 +33,7 @@
 		    bottom: 0%;
 		    top: 70%;
 		}
+
     </style>
 </head>
 
@@ -40,7 +42,7 @@
 <div class='container-fluid bg-cfe'>
     <nav class="navbar container mb-3 rounded-bottom navbar-expand-lg navbar-dark bg-cfe">
 
-        <a class="navbar-brand" href="#">OnlineShop</a>
+        <a class="navbar-brand" href="{% url 'shop:home' %}">OnlineShop</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +59,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-
 
 
                 {% if request.user.is_authenticated %}
@@ -119,7 +120,6 @@
         <!--main col end-->
 
 
-
         <!--right side col end-->
     </div>
     <!--row end-->
@@ -128,10 +128,14 @@
 <!-- Footer start -->
 <div class='footer container-fluid mb-0 bg-secondary text-dark text-left mt-5'>
     <div class='container'>
-        <div class='row py-5'>
+        <div class='row py-4'>
             <div class='col-12 py-5'>
-                <h1 class='display-5'>Footer</h1>
-                <p class='lead'>Sub Footer.</p>
+                <h1 class='display-5'>Jihoon's Online Shop</h1>
+                <p class='lead'>Contact</p>
+                <p>Email: <a href="#" style="color:white">blue_jihoon@naver.com</a></p>
+                <p>Github: <a href="https://github.com/navill" style="color:white">https://github.com/navill</a></p>
+                <p>Notion: <a href="https://www.notion.so/afmadadans/Portfolio-9ca062582fdd41b19eb68f6afc417410" style="color:white">https://www.notion.so/afmadadans/Portfolio-9ca062582fdd41b19eb68f6afc417410</a>
+                </p>
             </div>
         </div>
     </div>

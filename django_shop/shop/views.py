@@ -11,8 +11,10 @@ from shop.recommender import Recommend
 
 def home(request):
     r = Recommend()
+    # suggested_items = r.suggest_items()
     try:
         suggested_items = r.suggest_items()
+        print(suggested_items)
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
@@ -21,8 +23,6 @@ def home(request):
     categories = Category.objects.all()
     for cat in categories:
         data[cat] = SubCategory.objects.filter(parent_category=cat)
-    featured_item = ['a']
-    featured_item = ['a']
     return render(request, template_name='shop/main.html',
                   context={'data': data, 'suggested_items': suggested_items})
 

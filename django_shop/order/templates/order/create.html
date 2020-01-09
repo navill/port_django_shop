@@ -1,10 +1,11 @@
 {% extends 'shop/base.html' %}
+{% load humanize %}
 
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
 <h1>Checkout</h1>
-<div class="col-7 display-5 mx-auto" style="height: 46vh;">
+<div class="col-7 display-5 mx-auto">
     <div class="order-list">
         <form class='create-order' action="." method="post">
             {{ form.as_p }}
@@ -17,13 +18,13 @@
             {% for item in cart %}
             <li style="text-align: right;">
                 <p>{{ item.product.name }} X {{ item.quantity }}
-                    <span>{{ item.total_price }}원</span>
+                    <span>{{ item.total_price | intcomma }} 원</span>
                 </p>
             </li>
             {% endfor %}
         </ul>
         <div>
-            <p class="total-price">total: {{cart.get_total_price }}원</p>
+            <p class="total-price">total: {{cart.get_total_price | intcomma }}원</p>
         </div>
 
     </div>

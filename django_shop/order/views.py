@@ -2,7 +2,7 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
-from account.actions import track_action
+# from account.actions import track_action
 from cart.cart import Cart
 from order.forms import OrderForm
 from order.models import OrderWithItem, Order
@@ -44,8 +44,9 @@ def create_order(request):
                 product_bulk[item['product'].id].quantity -= item['quantity']
                 # 사용자 동작
                 if request.user.is_authenticated:
+                    pass
                     # user=Foreignkey(User) 이므로 request.user가 authenticated user가 아닐 경우 에러 발생
-                    track_action(user=request.user, verb='bought', content_object=item['product'])
+                    # track_action(user=request.user, verb='bought', content_object=item['product'])
 
             # bulk_create를 이용한 OrderWithItem db 생성
             order_items = OrderWithItem.objects.bulk_create(order_item_list)
@@ -55,6 +56,7 @@ def create_order(request):
             r = Recommend()
             try:
                 r.buy_item(products)
+                print('bought in redis')
             except Exception as e:
                 print(f'not connect redis:{e}')
 

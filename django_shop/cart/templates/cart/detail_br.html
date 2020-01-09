@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}Online Shop{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+		.bg-cfe {
+			background-color: #007cae;
+		}
+	</style>
+	<style type="text/css">
+		#floatdiv {
+			position: fixed;
+			width: 170px;
+			height: 50px;
+			display: inline-block;
+			right: 30px;
+			/* 창에서 오른쪽 길이 */
+			top: 10%;
+			/* 창에서 위에서 부터의 높이 */
+			background-color: transparent;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+
+
+	<div class='container'>
+		<h1>Thank you for your purchase</h1>
+		
+		<h2>Purchase List</h2>
+		<h3>Order Number: <></h3>
+		<h3>Buyer Information</h3>
+		<p>name: </p>
+		<p class='mb-5 mt-3'>Address: </p>
+		<!--info start-->
+		<div class='row'>
+			<div class='col-3 mx-auto'>
+				<h5>Product</h5>
+			</div>
+			<div class='col-3'>
+				<h5>Quantity</h5>
+			</div>
+			<div class='col-3 text-right'>
+				<h5>Unit Price</h5>
+			</div>
+		</div>
+		
+		<div class='row'>
+			<div class='col-3 mx-auto'>
+				<h5>Product</h5>
+			</div>
+			<div class='col-3'>
+				<h5>Quantity</h5>
+			</div>
+			<div class='col-3 text-right'>
+				<h5>Unit Price</h5>
+			</div>
+		</div>
+		<!--info end-->
+		
+		<div class='col mt-4 text-right'>
+			<p>Total price: {total_price}</p>
+		</div>
+	</div>
+
+</body></html>

@@ -104,23 +104,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'dshop_db',
-#         'USER': secret_key.key['USER'],
-#         'PASSWORD': secret_key.key['PASSWORD'],
-#         # 보안상 storage의 위치는 노출시키지 않는 것이 좋다
-#         'HOST': secret_key.key['HOST'],
-#         'PORT': '5432',
-#     },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'initdbname',
+        'USER': secret_key.key['USER'],
+        'PASSWORD': secret_key.key['PASSWORD'],
+        # 보안상 storage의 위치는 노출시키지 않는 것이 좋다
+        'HOST': secret_key.key['HOST'],
+        'PORT': '5432',
+    },
+}
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -157,28 +157,28 @@ USE_TZ = True
 
 
 # # AWS setting
-# AWS_ACCESS_KEY_ID = secret_key.key['AWS_ACCESS_KEY_ID']
-# AWS_SECRET_ACCESS_KEY = secret_key.key['AWS_SECRET_ACCESS_KEY']
-# AWS_REGION = 'ap-northeast-2'
-# AWS_STORAGE_BUCKET_NAME = secret_key.key['AWS_STORAGE_BUCKET_NAME']  # static
-# AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_S3_SECURE_URLS = True
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_LOCATION = 'static'
-#
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)  # s3
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # s3
-# DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
+AWS_ACCESS_KEY_ID = secret_key.key['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secret_key.key['AWS_SECRET_ACCESS_KEY']
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = secret_key.key['AWS_STORAGE_BUCKET_NAME']  # static
+AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_S3_SECURE_URLS = True
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static'
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)  # s3
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # s3
+DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
 
 LOGIN_REDIRECT_URL = 'shop:home'
 
-STATIC_URL = '/static/'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_URL = '/static/'
+#
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # 세션을 이용한 장바구니

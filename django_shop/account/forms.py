@@ -20,7 +20,7 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         # model fields
-        fields = ('username', 'first_name', 'email')
+        fields = ('username', 'first_name','last_name', 'email')
 
     # clean_<fieldname>(): 특정 필드의 유효성 검증을 위해 사용
     # 실행시점 : form.is_valid() 호출 시, 아래의 clean_<fieldname>() 메서드가 실행된다.

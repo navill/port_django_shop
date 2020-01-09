@@ -12,5 +12,5 @@ urlpatterns = [
     path('shop/product/<int:p_id>/', views.product_detail, name='product_detail'),
     path('', views.home, name='home'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
