@@ -42,7 +42,7 @@
 
 
 
-## QuerySet 최적화 - 2
+## QuerySet 최적화 - 2,3 번의 문제는 selecte_related와 prefetch_related로 해결 가능할 듯
 
 ![image1](/README_Folder/image/trouble1107_1.png)
 
