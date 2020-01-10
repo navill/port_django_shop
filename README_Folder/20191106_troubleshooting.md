@@ -55,7 +55,7 @@
   
 
 - **Solution**
-  - prefetch_related와 single_related를 이용해 중복 제거-> 업데이트 예정
+  - prefetch_related와 select_related를 이용해 중복 제거-> 업데이트 예정
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
