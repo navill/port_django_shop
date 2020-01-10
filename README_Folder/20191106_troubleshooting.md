@@ -55,7 +55,7 @@
   
 
 - **Solution**
-
+  - prefetch_related와 single_related를 이용해 중복 제거-> 업데이트 예정
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
@@ -126,8 +126,6 @@
   - 따라서 가능하면 제너레이터(lazy evaluation)를 이용해 메모리의 소비를 줄이는 방법을 지향하는 것이 좋다.
 
     - 위 구문은 paginator의 동작을 위해 필요한 속성(len())을 generator가 가지고 있지 않기 때문에 사용할 수 없다.
-
-    - generator -> list로 변환하여 사용할 수 있지만, 메모리에 대한 이득이 크지 않음.
 
 
 
