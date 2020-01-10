@@ -99,9 +99,9 @@
 
 - **Solution**
 
-  - cache.get()을 통해 전달받은 쿼리셋을 파이썬 객체로 변환
+  - cache.get()을 통해 전달받은 캐싱된 쿼리셋을 이용
 
-  - 파이썬 객체의 속성에 접근하기 때문에 데이터베이스에 접근하지 않고도 원하는 동작을 구현할 수 있다.
+  - 캐쉬된 데이터에 접근하기 때문에 데이터베이스에 접근하지 않고도 원하는 동작을 구현할 수 있다.
 
     ![image5](/README_Folder/image/trouble1111_2.png)
 
@@ -111,7 +111,7 @@
                 if category_slug == cat.slug:
                     category = cat
             products = products.filter(category=category)
-            # python 객체로 변환하여, 한 번의 db 접근으로 pagination 및 template에서 사용
+            # 한 번의 db 접근으로 pagination 및 template에서 사용
             products = [product for product in products]
         paginator = Paginator(products, 6)
         ...
@@ -121,7 +121,7 @@
 
 - 고려사항
 
-  - list comprehension을 이용해 파이썬 객체로 변활할 때, 객체가 많은 양의 데이터를 담고 있을 경우, 메모리 낭비가 발생할 수 있다.
+  - list comprehension을 이용할 때, 객체가 많은 양의 데이터를 담고 있을 경우, 메모리 낭비가 발생할 수 있다.
 
   - 따라서 가능하면 제너레이터(lazy evaluation)를 이용해 메모리의 소비를 줄이는 방법을 지향하는 것이 좋다.
 
