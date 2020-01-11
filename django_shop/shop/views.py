@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
 from cart.forms import CartForm
-from shop.models import Category, Product, SubCategory
+from shop.models import Category, Product, SubCategory, ProductImage
 from shop.recommender import Recommend
 
 
@@ -20,9 +20,14 @@ def home(request):
         print(f'not connect redis:{e}')
 
     data = dict()
-    categories = Category.objects.all()
+
+    categories = Category.objects.prefetch_related('subcategory_set').all()
+
+    # product_id_list = [p.id for p in suggested_items]
+    # suggested_items = Product.objects.prefetch_related('product_image').filter(id__in=product_id_list)
+
     for cat in categories:
-        data[cat] = SubCategory.objects.filter(parent_category=cat)
+        data[cat] = cat.subcategory_set.all()
     return render(request, template_name='shop/main.html',
                   context={'data': data, 'suggested_items': suggested_items})
 
@@ -51,21 +56,16 @@ def product_list(request, category_slug=None):
     """
     cart_form = CartForm()
     page = request.GET.get('page')
-    products = Product.objects.all()
+    # products = Product.objects.all()
     # product list에서 category를 선택했을 경우
+
     category = None
     if category_slug:
         category = SubCategory.objects.get(slug=category_slug)
-        # category = get_object_or_404(Category, slug=category_slug)
-        # category = categories.get(slug=category_slug) -> get()에 의해 db 접근
-        # for cat in categories:
-        #     if cat.slug == category_slug:
-        #         category = cat
-        #         break
-        # raise query
-        products = products.filter(category=category)
-        # python 객체로 변환하여, 한 번의 db 접근으로 pagination 및 template에서 사용
-        products = [product for product in products]
+        product_image = ProductImage.objects.select_related('product').filter(product__category=category)
+        products = [pi.product for pi in product_image]
+    else:
+        products = Product.objects.all()
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
     r = Recommend()
