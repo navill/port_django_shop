@@ -42,26 +42,68 @@
 
 
 
-## QuerySet 최적화 - 2,3 번의 문제는 selecte_related와 prefetch_related로 해결 가능할 듯
+## QuerySet 최적화
 
-![image1](/README_Folder/image/trouble1107_1.png)
+### 되도록 Cache를 이용한 쿼리 최적화는 지양하는 것이좋다(cache를 유지하기 위한 서버를 동작시키거나 cache 메모리를 유지시키는 것 또한 자원 소모). 
 
-- product_list 페이지 로딩하는데 오랜 시간이 걸림
+### django에서 제공하는 쿼리 최적화를 위한 메서드나 함수를 이용하고, 오픈소스나 third party library를 이용하자.
 
-  - 모든 product_list에서 Product.objects.all() 및 Category.objects.all()이 일어남 
-    - 비교적 많은 양의 데이터를 가지고 있음
-  - pagination 과정에서 db에 많은 접근(예상)
+![home](/README_Folder/image/home.png)
+
+![before_duplicated_queryset](/README_Folder/image/before_duplicated_queryset.png)
+
+- 'home' 페이지 로딩하는데 오랜 시간이 걸림
+
+  - 추천 제품을 화면에 표시하는데 제품(Product)과 이미지(ProductImage)에 대한 불필요한 쿼리 발생
+
+  ```python
+  # models.py
+  class Product(models.Model):
+    	...
+  		def get_image_url(self):
+          img = self.product_image.first()
+          if img:
+              # directory path
+              return img.image.url
+          return img
+        
+  class ProductImage(models.Model):
+      product = models.ForeignKey(Product, related_name='product_image', on_delete=models.CASCADE)
+  ```
 
   
 
-- **Solution**
-  - prefetch_related와 select_related를 이용해 중복 제거-> 업데이트 예정
+- **Solution(cache - 비추)**
+  
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
   ![image2](/README_Folder/image/trouble1107_2.png)
+  
+  
 
+- **Solution(selete_related)**
 
+  - ProductImage 객체를 가져올 때 select_related를 이용하여 참조에 필요한 Product 객체를 함께 가져온다.
+
+  - 기존의 코드에서 product.get_image_url을 이용하는 과정에서 select_related로 가져온 product가 템플릿에서 제대로 사용되지 못함
+
+    - get_image_url에서 새로운 참조를 일으키기 때문에 select_related 구문과 별도로 product를 참조하는 쿼리가 발생한다.
+  - 때문에 models.py와 함께 template도 추가로 변경
+  
+  ```python
+    {% for product_image in product_images %}
+      {% with product_image.product as product %}
+      ...
+    {% endwith %}
+    {% endfor %}
+    ```
+  
+    - with tag를 이용해 기존의 product 변수명은 유지하고 product_image는 기존의 get_image_url을 대체 한다.
+  
+    ![after_duplicated_query](/README_Folder/image/after_duplicated_query.png)
+  
+    
 
 - **고려사항**
 
