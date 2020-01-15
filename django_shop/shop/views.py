@@ -14,21 +14,21 @@ def home(request):
     # suggested_items = r.suggest_items()
     try:
         suggested_items = r.suggest_items()
-        print(suggested_items)
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
-
-    product_images = ProductImage.objects.select_related('product').filter(product__in=suggested_items)
+    product_images = list()
+    # product_images = ProductImage.objects.select_related('product').filter(product__in=suggested_items)
+    for suggested_item in suggested_items:
+        product_image = ProductImage.objects.select_related('product').get(product=suggested_item)
+        product_images.append(product_image)
     categories = Category.objects.prefetch_related('subcategory_set').all()
 
-    # product_id_list = [p.id for p in suggested_items]
-    # suggested_items = Product.objects.prefetch_related('product_image').filter(id__in=product_id_list)
     data = dict()
     for cat in categories:
         data[cat] = cat.subcategory_set.all()
     return render(request, template_name='shop/main.html',
-                  context={'data': data, 'suggested_items': suggested_items, 'product_images': product_images}, )
+                  context={'data': data, 'suggested_items': suggested_items, 'product_images': product_images})
 
 
 def product_list(request, category_slug=None):
@@ -66,14 +66,12 @@ def product_list(request, category_slug=None):
     elif category_slug:
         category = SubCategory.objects.get(slug=category_slug)
         product_image = ProductImage.objects.select_related('product').filter(product__category=category)
-        products = [pi.product for pi in product_image]
 
     return render(request, 'shop/product/list.html',
                   {'category': category, 'product_image': product_image})
 
 
 def product_detail(request, p_id):
-    product = get_object_or_404(Product, id=p_id)
     product_image = ProductImage.objects.select_related('product').get(product__id=p_id)
     cart_form = CartForm()
     r = Recommend()

@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 
 from cart.cart import Cart
 from cart.forms import CartForm
-from shop.models import Product
+from shop.models import Product, ProductImage
 
 
 @require_POST
@@ -37,13 +37,17 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
-    # print('id(cart) in cart_detail:', id(cart))
+    product_list = list()
     for item in cart:
         # quantity 및 is_update 데이터를 담고 있는 폼을 cart-session에 저장
         # item = {'1':{'quantity': 1, 'price': 10, cartform:<..., fields = (quantity, is_update)>}}
         item['cart_form'] = CartForm(initial={'quantity': item['quantity'], 'is_update': True})
+        product_list.append(item['product'])
         # print(item['cart_form'])
-    return render(request, 'cart/detail.html', {'cart': cart})
+        item['image'] = ProductImage.objects.select_related('product').get(product=item['product'])
+    product_images = ProductImage.objects.select_related('product').filter(product__in=product_list)
+    # print(product_images)
+    return render(request, 'cart/detail.html', {'cart': cart, 'product_images': product_images})
 
 
 def cart_clear(request):

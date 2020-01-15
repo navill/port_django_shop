@@ -14,7 +14,7 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 
 class Recommend(Singleton):
 
-    # 늘 그렇듯 필요할 땐 안됨...............
+    # 보류
     # def buy_item(self, products):
     #     product_ids = [p.id for p in products]
     #     print(product_ids)
