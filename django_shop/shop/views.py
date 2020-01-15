@@ -32,32 +32,7 @@ def home(request):
 
 
 def product_list(request, category_slug=None):
-    """
-    Cache - 보류
-
-    category = None
-    category_all = Category.objects.all()
-    product_all = Product.objects.all()
-    # cache.get
-    products = cache.get('products')
-    categories = cache.get('categories')
-
-    # cache.set
-    if not isinstance(products, QuerySet) and not isinstance(categories, QuerySet):  # 또는 그냥 if products is None:
-        cache.set('products', product_all, 300)
-        cache.set('categories', category_all, 300)
-        products = cache.get('products')
-        categories = cache.get('categories')
-        # 만일 memcached가 동작하지 않을 경우
-        if products is None:
-            products = product_all
-            categories = category_all
-    """
-    cart_form = CartForm()
-    page = request.GET.get('page')
     q = request.GET.get('q')
-    products = None
-    # product list에서 category를 선택했을 경우
     product_image = None
     category = None
     if q:
@@ -76,7 +51,7 @@ def product_detail(request, p_id):
     cart_form = CartForm()
     r = Recommend()
     try:
-        suggested_items = r.suggest_items(product_id=p_id)
+        suggested_items = r.suggest_items(product_id=p_id)[:3]
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')

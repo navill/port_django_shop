@@ -7,19 +7,22 @@
 <div class='container'>
     <div class='row'>
         <!--left info-->
-        <div class='col-7'>
+        <div class='col-5'>
 
             {% with product_image.product as product %}
 
             <h1>{{ product.name }}</h1>
             <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
             <img src="{% if product_image.image.url %}{{ product_image.image.url }}{% else %}{% static 'img/no_image.png' %}
-        					{% endif %}" width="550px;">
+        					{% endif %}" width="450px;">
         </div>
         <!--left info end-->
 
+           <div class='col-2'>
+           </div>
+
         <!--right info start-->
-        <div class='col-4 ml-5 mt-5'>
+        <div class='col-5 mt-5'>
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {{ cart_form }}
                 {% csrf_token %}
@@ -29,10 +32,17 @@
                 <h5>Description</h5>
                 {{ product.description|linebreaks }}
             </div>
-            <p class="price">가격: {{ product.price|intcomma }}원</p>
+            <p class="price">가격: {{ product.price|intcomma }}원</p><br>
+            <div>
+                <h3>함께 구매한 제품:</h3>
+                {% for suggested_item in suggested_items%}
+                    <span> <a href="{{ suggested_item.get_absolute_url }}">[{{ suggested_item }}] </a></span>
+                {% endfor %}
 
+            </div>
 
         </div>
+
         {% endwith %}
         <!--right info end-->
     </div>
