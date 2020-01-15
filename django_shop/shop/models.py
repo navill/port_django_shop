@@ -50,12 +50,12 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id])
 
-    def get_image_url(self):
-        img = self.product_image.first()
-        if img:
-            # directory path
-            return img.image.url
-        return img
+    # def get_image_url(self):
+    #     img = self.product_image.first()
+    #     if img:
+    #         # directory path
+    #         return img.image.url
+    #     return img
 
 
 @receiver([post_save, post_delete], sender=Product)
@@ -80,9 +80,9 @@ def image_upload_to(instance, filename):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product,related_name='product_image', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='product_image', on_delete=models.CASCADE)
     # image_upload_to: 함수 호출'()'이 아닌 함수명을 할당
-    image = models.ImageField(upload_to=image_upload_to, null=True)
+    image = models.ImageField(upload_to=image_upload_to, blank=True, null=True)
 
     def __str__(self):
         return self.product.name

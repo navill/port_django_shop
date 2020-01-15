@@ -113,19 +113,19 @@
 
 <!--card colums start-->
 <div class="card-columns">
-
-
-    {% for suggested_item in suggested_items %}
+    {% for product_image in product_images %}
+    {% with product_image.product as product %}
     <div class="card">
 
-        <a href="{{ suggested_item.get_absolute_url }}">
-            <img src="{{ suggested_item.get_image_url }}" class="card-img-top">
+        <a href="{{ product.get_absolute_url }}">
+            <img src="{{ product_image.image.url }}" class="card-img-top">
         </a>
         <div class="card-body">
-            <h5 class="card-title">{{ suggested_item.name }}</h5>
-            <p class="card-text">{{ suggested_item.description }}</p>
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
         </div>
     </div>
+    {% endwith %}
     {% endfor %}
 </div>
 <!--card colums end-->

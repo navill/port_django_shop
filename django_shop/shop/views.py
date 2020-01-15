@@ -19,17 +19,16 @@ def home(request):
         suggested_items = None
         print(f'not connect redis:{e}')
 
-    data = dict()
-
+    product_images = ProductImage.objects.select_related('product').filter(product__in=suggested_items)
     categories = Category.objects.prefetch_related('subcategory_set').all()
 
     # product_id_list = [p.id for p in suggested_items]
     # suggested_items = Product.objects.prefetch_related('product_image').filter(id__in=product_id_list)
-
+    data = dict()
     for cat in categories:
         data[cat] = cat.subcategory_set.all()
     return render(request, template_name='shop/main.html',
-                  context={'data': data, 'suggested_items': suggested_items})
+                  context={'data': data, 'suggested_items': suggested_items, 'product_images': product_images}, )
 
 
 def product_list(request, category_slug=None):
@@ -56,16 +55,20 @@ def product_list(request, category_slug=None):
     """
     cart_form = CartForm()
     page = request.GET.get('page')
-    # products = Product.objects.all()
+    q = request.GET.get('q')
+    products = None
     # product list에서 category를 선택했을 경우
-
+    product_image = None
     category = None
-    if category_slug:
+    if q:
+        products = Product.objects.filter(name__icontains=q)
+    elif category_slug:
         category = SubCategory.objects.get(slug=category_slug)
         product_image = ProductImage.objects.select_related('product').filter(product__category=category)
         products = [pi.product for pi in product_image]
-    else:
-        products = Product.objects.all()
+
+    # print(products[0].product_image.values())
+
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
     r = Recommend()
@@ -74,13 +77,14 @@ def product_list(request, category_slug=None):
     except Exception as e:
         suggested_items = None
         print(f'not connect redis:{e}')
+
     return render(request, 'shop/product/list.html',
-                  {'category': category, 'products': products,
-                   'suggested_items': suggested_items})
+                  {'category': category, 'product_image': product_image})
 
 
 def product_detail(request, p_id):
     product = get_object_or_404(Product, id=p_id)
+    product_image = ProductImage.objects.select_related('product').get(product__id=p_id)
     cart_form = CartForm()
     r = Recommend()
     try:
@@ -89,4 +93,4 @@ def product_detail(request, p_id):
         suggested_items = None
         print(f'not connect redis:{e}')
     return render(request, 'shop/product/detail.html',
-                  {'product': product, 'cart_form': cart_form, 'suggested_items': suggested_items})
+                  {'product_image': product_image, 'cart_form': cart_form, 'suggested_items': suggested_items})

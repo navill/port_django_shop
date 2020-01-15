@@ -15,10 +15,12 @@
 
 <!--card colums start-->
 <div class="card-columns">
-    {% for product in products%}
+    {% for pi in product_image %}
+    {% with pi.product as product %}
     <div class="card">
-        {% if product.get_image_url %}
-        <img src="{{ product.get_image_url }}" class="card-img-top">
+
+        {% if pi.image.url %}
+        <img src="{{ pi.image.url }}" class="card-img-top">
         {% else %}
         <img src="{% static 'img/no_image.png' %}" class="card-img-top">
         {% endif %}
@@ -38,6 +40,12 @@
             </div>
         </div>
     </div>
+    {% endwith %}
+    {% empty %}
+    <div class="col display-5" style="height: 100vh;">
+        <h1>Not found item</h1>
+    </div>
+
     {% endfor %}
 </div>
 <!--card colums end-->

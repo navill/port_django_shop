@@ -50,8 +50,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <form class="form-inline my-2 my-lg-0" method='GET' action=''>
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method='GET' action='{% url "shop:product_list" %}'>
+                <input class="form-control mr-sm-2" type="search" name='q' placeholder="Search" aria-label="Search">
                 <button class="btn btn-primary my-2 my-sm-0" value='' type="submit">Search</button>
             </form>
 

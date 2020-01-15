@@ -4,35 +4,37 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-    <div class='container'>
-        <div class='row'>
-            <!--left info-->
-            <div class='col-7'>
+<div class='container'>
+    <div class='row'>
+        <!--left info-->
+        <div class='col-7'>
 
+            {% with product_image.product as product %}
 
-                <h1>{{ product.name }}</h1>
-                <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-                <img src="{% if product.get_image_url %}{{ product.get_image_url }}{% else %}{% static 'img/no_image.png' %}
+            <h1>{{ product.name }}</h1>
+            <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+            <img src="{% if product_image.image.url %}{{ product_image.image.url }}{% else %}{% static 'img/no_image.png' %}
         					{% endif %}" width="550px;">
-            </div>
-            <!--left info end-->
-
-            <!--right info start-->
-            <div class='col-4 ml-5 mt-5'>
-                <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                    {{ cart_form }}
-                    {% csrf_token %}
-                    <input type="submit" value="Add to cart">
-                </form>
-                <div>
-                    <h5>Description</h5>
-                    {{ product.description|linebreaks }}
-                </div>
-                <p class="price">가격: {{ product.price|intcomma }}원</p>
-
-
-            </div>
-            <!--right info end-->
         </div>
+        <!--left info end-->
+
+        <!--right info start-->
+        <div class='col-4 ml-5 mt-5'>
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {{ cart_form }}
+                {% csrf_token %}
+                <input type="submit" value="Add to cart">
+            </form>
+            <div>
+                <h5>Description</h5>
+                {{ product.description|linebreaks }}
+            </div>
+            <p class="price">가격: {{ product.price|intcomma }}원</p>
+
+
+        </div>
+        {% endwith %}
+        <!--right info end-->
     </div>
+</div>
 {% endblock %}
