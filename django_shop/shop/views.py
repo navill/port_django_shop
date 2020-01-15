@@ -61,22 +61,12 @@ def product_list(request, category_slug=None):
     product_image = None
     category = None
     if q:
-        products = Product.objects.filter(name__icontains=q)
+        # products = Product.objects.filter(name__icontains=q)
+        product_image = ProductImage.objects.select_related('product').filter(product__name__icontains=q)
     elif category_slug:
         category = SubCategory.objects.get(slug=category_slug)
         product_image = ProductImage.objects.select_related('product').filter(product__category=category)
         products = [pi.product for pi in product_image]
-
-    # print(products[0].product_image.values())
-
-    paginator = Paginator(products, 6)
-    products = paginator.get_page(page)
-    r = Recommend()
-    try:
-        suggested_items = r.suggest_items()
-    except Exception as e:
-        suggested_items = None
-        print(f'not connect redis:{e}')
 
     return render(request, 'shop/product/list.html',
                   {'category': category, 'product_image': product_image})

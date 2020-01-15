@@ -38,7 +38,7 @@ Shopping cart
     <div class='row'>
         <div class='col-3'>
             <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.product_image.image %}{{ product.product_image.image }}
+                <img src="{% if product.get_image_url %}{{ product.get_image_url }}
                 {% else %}{% static 'img/no_image.png' %}{% endif %}" style="width: 180px;height: 100px;">
             </a>
         </div>

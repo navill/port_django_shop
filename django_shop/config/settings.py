@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'lra+g+s1v=zye=*+2^#)7zlo-jgx6@#f7jwa718k$2u@!f0_cs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -104,23 +104,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'initdbname',
-#         'USER': secret_key.key['USER'],
-#         'PASSWORD': secret_key.key['PASSWORD'],
-#         # 보안상 storage의 위치는 노출시키지 않는 것이 좋다
-#         'HOST': secret_key.key['HOST'],
-#         'PORT': '5432',
-#     },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'initdbname',
+        'USER': secret_key.key['USER'],
+        'PASSWORD': secret_key.key['PASSWORD'],
+        # 보안상 storage의 위치는 노출시키지 않는 것이 좋다
+        'HOST': secret_key.key['HOST'],
+        'PORT': '5432',
+    },
+}
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
