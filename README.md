@@ -4,6 +4,13 @@
 
 **PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1pseR-K55QMxrJqaDQHK2MGOJDZAhoV7g/view?usp=sharing)
 
+##Tech
+Language and Framework: Python, Django
+Front-End: Django Template(BootStrap) 
+Server: EC2, Nginx, uWSGI 
+Storage: RDS(PostgreSQL), S3
+Etc: Redis
+
 ## App 구성
 
 - Shop - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/shop)
