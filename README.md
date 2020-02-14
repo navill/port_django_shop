@@ -4,7 +4,7 @@
 
 **PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1pseR-K55QMxrJqaDQHK2MGOJDZAhoV7g/view?usp=sharing)
 
-##Tech
+## Tech
 Language and Framework: Python, Django
 Front-End: Django Template(BootStrap) 
 Server: EC2, Nginx, uWSGI 
