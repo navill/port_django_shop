@@ -1,6 +1,3 @@
-from django.core.cache import cache
-from django.core.paginator import Paginator
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
@@ -19,9 +16,12 @@ def home(request):
         print(f'not connect redis:{e}')
     product_images = list()
     # product_images = ProductImage.objects.select_related('product').filter(product__in=suggested_items)
-    for suggested_item in suggested_items:
-        product_image = ProductImage.objects.select_related('product').get(product=suggested_item)
-        product_images.append(product_image)
+    try:
+        for suggested_item in suggested_items:
+            product_image = ProductImage.objects.select_related('product').get(product=suggested_item)
+            product_images.append(product_image)
+    except:
+        pass
     categories = Category.objects.prefetch_related('subcategory_set').all()
 
     data = dict()

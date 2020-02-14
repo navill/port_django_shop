@@ -2,7 +2,7 @@
 
 **django shop**: http://django.navill.shop/
 
-**PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1ws1tKrrl40kVXgqbS_gbKP7fsVtZ_DJR/view?usp=sharing)
+**PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1pseR-K55QMxrJqaDQHK2MGOJDZAhoV7g/view?usp=sharing)
 
 ## App 구성
 
