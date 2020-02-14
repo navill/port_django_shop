@@ -6,9 +6,13 @@
 
 ## Tech
 Language and Framework: Python, Django
+
 Front-End: Django Template(BootStrap) 
+
 Server: EC2, Nginx, uWSGI 
+
 Storage: RDS(PostgreSQL), S3
+
 Etc: Redis
 
 ## App 구성
