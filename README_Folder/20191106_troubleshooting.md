@@ -48,10 +48,6 @@
 
 ### django에서 제공하는 쿼리 최적화를 위한 메서드나 함수를 이용하고, 오픈소스나 third party library를 이용하자.
 
-![home](/README_Folder/image/home.png)
-
-![before_duplicated_queryset](/README_Folder/image/before_duplicated_queryset.png)
-
 - 'home' 페이지 로딩하는데 오랜 시간이 걸림
 
   - 추천 제품을 화면에 표시하는데 제품(Product)과 이미지(ProductImage)에 대한 불필요한 쿼리 발생
@@ -73,15 +69,13 @@
 
   
 
-- **Solution(cache - 비추)**
+- **Solution(cache - 지양)**
   
   - cache를 이용해 Product 객체를 메모리에 저장
   - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
-  ![image2](/README_Folder/image/trouble1107_2.png)
   
   
-
 - **Solution(selete_related)**
 
   - ProductImage 객체를 가져올 때 select_related를 이용하여 참조에 필요한 Product 객체를 함께 가져온다.
@@ -97,11 +91,11 @@
       ...
     {% endwith %}
     {% endfor %}
-    ```
+  ```
   
     - with tag를 이용해 기존의 product 변수명은 유지하고 product_image는 기존의 get_image_url을 대체 한다.
   
-    ![after_duplicated_query](/README_Folder/image/after_duplicated_query.png)
+  
   
     
 
