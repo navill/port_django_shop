@@ -1,8 +1,8 @@
 ### Django Cache
 
-[Django's cache framework | Django documentation | Django](https://docs.djangoproject.com/en/2.2/topics/cache/)
+[Django's cache framework - memcached](https://docs.djangoproject.com/en/3.0/topics/cache/#memcached)
 
-- Django에서 제공하는 cache backend - Memory 기반 cache가 높은 성능을 발휘
+- memcached backend 설정 - Memory 기반 cache가 높은 성능을 발휘
 
   - `backends.memcached.MemcachedCache` or `backends.memcached.PyLibMCCache`:  메모리 기반 cache
   - `backends.db.DatabaseCache`: db를 이용한 cache
@@ -19,7 +19,7 @@
 
 - setting cache
 
-  ```
+  ```python
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -31,12 +31,12 @@
 - memcached initialize
 
   ```
-    memcached -l 127.0.0.1:11211
+    memcached -l 127.0.0.1:11211(default)
   ```
 
 - Cache setting
 
-  - ```
+  - ```python
     CACHES = {
         'default': {
           'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -45,7 +45,7 @@
     }
     ```
     
-    : dictionary 형태로 프로젝트에서 사용 가능한 모든 캐쉬 설정 
+    dictionary 형태로 프로젝트에서 사용 가능한 캐쉬 설정 
     
     - `BACKEND`: 사용할 캐쉬
     - `KEY_FUNCTION`: 접두사, 버전 및 키를 인수로 사용하고 최종 캐시 키를 반환하는 콜 러블에 대한 점선 경로가 포함 된 문자열
@@ -60,6 +60,8 @@
   - `CACHE_MIDDLEWARE_KEY_PREFIX`: 캐시 키에 사용할 접두사
 
   - `CACHE_MIDDLEWARE_SECONDS`: 캐시 페이지를 로드하기 위한 기본적인 시간(초)
+
+  
 
 - memcache monitoring
 

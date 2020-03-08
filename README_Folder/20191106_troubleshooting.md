@@ -371,13 +371,15 @@ def func_b(product_ids):
   - 각각 다른 동작을 위해 객체가 생성되더라도 동일한 id값을 갖는다. 
   - Singleton 패턴이 적용된 객체는 다른 앱에서 객체를 생성하여 db나 공유 객체에 접근할 수 없기 때문에 race condition을 해결하기 위한 방법으로도 쓰인다.
   
+  
+  
 - **Additional**
 
   - 몇가지 singleton에 관한 테스트
 
     ```python
     # 1: TypeError: getinstance() takes 1 positional argument but 4 were given
-    # 두 번째 객체 생성 시 에러 발생(why???????)
+    # 두 번째 객체 생성 시 에러 발생
     class SingletonInstance:
         __instance = None
     
@@ -396,7 +398,7 @@ def func_b(product_ids):
         def __init__(self, a, b, c):
             self.result = a + b + c
     
-    
+    ---------------------------------------------------------
     # 2: 새로운 객체 생성 -> init을 포함한 객체가 _instances에 할당
     # -> 새로운 객체에 의해 생성된 초기화값은 무시됨
     class SingletonType(type):
@@ -425,7 +427,7 @@ def func_b(product_ids):
     print(b.result)  # 6
     print(id(b))  # 4565035048
     
-    
+    ---------------------------------------------------------
     # 3: 새로운 객체 생성 시, 정체성(id)는 바뀌지 않지만 초기화(__init__)은 반영
     class Singleton:
         _instance = None
@@ -450,7 +452,7 @@ def func_b(product_ids):
     print(b.result)  # 12
     print(id(b))  # 4565035664
     
-    
+    ---------------------------------------------------------
     # 4(from sourcemaking): 2번과 동일한 결과
     class Singleton(type):
         """
@@ -480,7 +482,9 @@ def func_b(product_ids):
     b = MainClass(3, 4, 5)
     print(b.result)  # 6
     print(id(b))  # 4545081528
+    ---------------------------------------------------------
     
-    ```
+```
+    
+    - 객체를 새로 생성할 때 마다 객체 자체의 정체성은 변하지 않고, 입력된 초기화 값은 반영 되어야 할 경우, 3번을 제외한 나머지는 사용 불가
 
-    객체를 새로 생성할 때 마다 객체 자체의 정체성은 변하지 않고, 입력된 초기화 값은 반영 되어야 할 때 3번을 제외한 나머지는 사용 불가

@@ -5,15 +5,15 @@
 **PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1pseR-K55QMxrJqaDQHK2MGOJDZAhoV7g/view?usp=sharing)
 
 ## Tech
-Language and Framework: Python, Django
+**Language and Framework:** Python, Django
 
-Front-End: Django Template(BootStrap) 
+**Front-End:** Django Template(BootStrap) 
 
-Server: EC2, Nginx, uWSGI 
+**Server:** EC2(Nginx & uWSGI)
 
-Storage: RDS(PostgreSQL), S3
+**Storage:** RDS(PostgreSQL), S3
 
-Etc: Redis
+**Etc:** Redis(In-memory), Memcached(Cache)
 
 ## App 구성
 
@@ -25,6 +25,7 @@ Etc: Redis
   - Singleton을 이용한 Cart 및 Recommend 객체 생성 - [shop.pattern_singletone](https://github.com/navill/port_django_shop/blob/master/django_shop/shop/pattern_singleton.py)
   
 - Cart - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/cart)
+  
   - [Django Session](README_Folder/django_shop_session.md)을 이용한 장바구니 - [cart.cart.Cart](https://github.com/navill/port_django_shop/blob/de62a57a9f5a27831ca09f74f86c1894b4bb1c19/django_shop/cart/cart.py#L6)
   
 - Order - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/order)
@@ -33,8 +34,10 @@ Etc: Redis
 
 - Account - [git](https://github.com/navill/port_django_shop/tree/master/django_shop/account)
   - 사용자 등록 및 유저 정보 변경 기능
+    
     - django.contrib.auth.views를 이용하여 구현
-  - ~~관리자 계정일 경우 유저의 동작 추적~~([ContentType](README_Folder/contenttype.md))
+    
+      
 
 ### [TroubleShooting](README_Folder/20191106_troubleshooting.md)
 
