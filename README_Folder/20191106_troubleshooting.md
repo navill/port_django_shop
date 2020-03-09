@@ -26,16 +26,16 @@
 
   ``` python
   # cart.py
-  class Cart:
-      def __init__(self, request):
-          ...
-          product_ids = self.cart.keys()
-          self.products = Product.objects.filter(id__in=product_ids)
+    class Cart:
+        def __init__(self, request):
+            ...
+            product_ids = self.cart.keys()
+            self.products = Product.objects.filter(id__in=product_ids)
       
-      def __iter__(self):
-      		...
-    		for product in self.products:
-          		self.cart[str(product.id)]['product'] = product
+        def __iter__(self):
+            ...
+            for product in self.products:
+                self.cart[str(product.id)]['product'] = product
   ```
 
   ![result](/README_Folder/image/result.png)
@@ -55,8 +55,8 @@
   ```python
   # models.py
   class Product(models.Model):
-    	...
-  		def get_image_url(self):
+      ...
+      def get_image_url(self):
           img = self.product_image.first()
           if img:
               # directory path
@@ -231,12 +231,12 @@
       ```python
       # query에 접속
       if query_set:
-        	# query에 한 번 더 접속
-        	query_set.get(id=1)
+          # query에 한 번 더 접속
+          query_set.get(id=1)
       
       # query에 접속하지 않음
       if query_set.exists():
-        	# query에 접속
+          # query에 접속
           query_set.get(id=1)
       ```
 
@@ -273,46 +273,48 @@
 - **Solution**
   - itertools.combination을 이용한 조합을 생성하고 한 번의 순환문(코드 상에서)을 이용해 zincrby 실행
 
-```python
-# testcode
 
-@benchmarker_time
-@profile(precision=4)
-def func_a(product_ids):
-    for item in product_ids:
-        for item2 in product_ids:
-            if item != item2:
-                print(item2)
-
-@benchmarker_time
-@profile(precision=4)
-def func_b(product_ids):
-    # 조합 생성
-    li = itertools.combinations(product_ids, len(product_ids) - 1)
-    for item2 in li:
-        item = set(product_ids) - set(item2)
-        for i in item2:
-            print(i)
-```
 
 - **Result**
 
+  ```python
+# testcode
+  
+@benchmarker_time
+  @profile(precision=4)
+def func_a(product_ids):
+      for item in product_ids:
+        for item2 in product_ids:
+              if item != item2:
+                print(item2)
+  
+@benchmarker_time
+  @profile(precision=4)
+def func_b(product_ids):
+      # 조합 생성
+    li = itertools.combinations(product_ids, len(product_ids) - 1)
+      for item2 in li:
+          item = set(product_ids) - set(item2)
+          for i in item2:
+              print(i)
+  ```
+  
   - before: 메모리 측면에서 더 좋은 성능을 보이지만 속도가 느림
-
+  
   ![20191210_before](/README_Folder/image/20191210_before.png)
-
+  
   - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이가 있음
-
+  
   ![20191210_after](/README_Folder/image/20191210_after.png)
-
+  
   - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있다.
-
+  
   - 하지만 객체의 수(제품)가 많지 않을 경우 큰 이득을 취할 수 없다.
-
+  
   - 메모리 효율에 대해서는 좀 더 조사가 필요하다.
-
+  
     - for문을 이용할 때 메모리 증가치가 0인 이유를 확인하지 못함
-
+  
       -> 실제로 메모리 증가가 이루어지지 않는지, 테스트상 오류인지 확인되지 않음
 
 
@@ -323,13 +325,13 @@ def func_b(product_ids):
 
 - 메모리에 불필요한 새로운 객체가 지속적으로 할당될 경우 서비스가 적절한 성능을 낼 수 없다.
 
-  **Cart 객체 생성**
+  **Cart 객체 생성 시** 
 
   - add, detail, clear, context_processor 동작 시 모두 새로운 Cart 객체가 생성됨
 
   ![20191212_before_singleton](/README_Folder/image/20191212_before_singleton.png)
 
-  **Recommender 객체 생성**
+  **Recommender 객체 생성 시**
 
   - 각 페이지를 이동할 때 마다 Recommender의 객체가 새로 생성됨
 
