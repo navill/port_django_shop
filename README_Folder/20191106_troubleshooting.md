@@ -1,4 +1,4 @@
-## QuerySet 최적화 - 1
+## Query 최적화
 
 - 짧지만 동일한 쿼리문이 두번 실행됨 
   - cart_detail의 순환문이 실행되면서 product에 대한 쿼리
@@ -42,7 +42,7 @@
 
 
 
-## QuerySet 최적화
+## Query 최적화
 
 ### 되도록 Cache를 이용한 쿼리 최적화는 지양하는 것이좋다(cache를 유지하기 위한 서버를 동작시키거나 cache 메모리를 유지시키는 것 또한 자원 소모). 
 
@@ -50,7 +50,7 @@
 
 - 'home' 페이지 로딩하는데 오랜 시간이 걸림
 
-  - 추천 제품을 화면에 표시하는데 제품(Product)과 이미지(ProductImage)에 대한 불필요한 쿼리 발생
+  - 추천 제품을 화면에 표시할 때, 제품(Product)과 이미지(ProductImage)에 대한 불필요한 쿼리 발생
 
   ```python
   # models.py
@@ -72,19 +72,21 @@
 - **Solution(cache - 지양)**
   
   - cache를 이용해 Product 객체를 메모리에 저장
-  - 페이지가 로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
+  - 페이지가 리로드될 때, 데이터베이스에 접근하지 않고 메모리에 올라간 Product 객체를 처리
 
   
   
 - **Solution(selete_related)**
 
-  - ProductImage 객체를 가져올 때 select_related를 이용하여 참조에 필요한 Product 객체를 함께 가져온다.
+  - ProductImage 객체를 가져올 때, select_related를 이용하여 참조에 필요한 Product 객체를 함께 가져온다.
 
-  - 기존의 코드에서 product.get_image_url을 이용하는 과정에서 select_related로 가져온 product가 템플릿에서 제대로 사용되지 못함
+  - product.get_image_url을 이용하는 과정에서 select_related로 가져온 product가 템플릿에서 제대로 사용되지 못 함.
 
     - get_image_url에서 새로운 참조를 일으키기 때문에 select_related 구문과 별도로 product를 참조하는 쿼리가 발생한다.
+
+      => 1query (ProductImage + Product=JOIN(select_related)에 의해 한 번에 가져옴) + 1query (product.get_image_url=Product 객체가 한번 더 ProductImage를 호출)
   - 때문에 models.py와 함께 template도 추가로 변경
-  
+
   ```python
     {% for product_image in product_images %}
       {% with product_image.product as product %}
@@ -92,44 +94,41 @@
     {% endwith %}
     {% endfor %}
   ```
-  
+
     - with tag를 이용해 기존의 product 변수명은 유지하고 product_image는 기존의 get_image_url을 대체 한다.
+
   
-  
-  
+
     
 
 - **고려사항**
 
   ```python
-      if category_slug:
-          category = categories.get(slug=category_slug)
-          products = products.filter(category=category)
+  if category_slug:
+      category = categories.get(slug=category_slug)
+      products = products.filter(category=category)
   ```
 
   - 코드를 위와 같이 구성할 경우 categories.get() 메서드에 의해 데이터베이스에 접근하게 됨
   - 따라서 쿼리 객체를 처리할 경우 db에 접근할 수 있는 메서드의 사용을 지양해야함
 
   ```python
-      for cat in categories:
-        	if category_slug == cat.slug:
-          		category = cat
+  for cat in categories:
+      if category_slug == cat.slug:
+          category = cat
           products = products.filter(category=category)
   ```
 
-  - 아래의 그림은 categories.get()을 사용할 경우
-
-  ![image3](/README_Folder/image/trouble1107_3.png)
 
 
 
-## QuerySet 최적화 - 3
+## Query 최적화
 
 - 쿼리셋을 cache에 저장하고, 객체의 속성에 접근 할 때,
 
   - 객체의 filtering 과정에서 반복적인 데이터베이스 접근
 
-  - ex) view의 products.filter(category=category) 및 template에서 'for product in products' 구문에서 쿼리 발생
+  - ex) view의 products.filter(category=category) + template에서 'for product in products' 구문에서 쿼리 발생
 
     ![image4](/README_Folder/image/trouble1111_1.png)
 
@@ -137,7 +136,7 @@
 
   - cache.get()을 통해 전달받은 캐싱된 쿼리셋을 이용
 
-  - 캐쉬된 데이터에 접근하기 때문에 데이터베이스에 접근하지 않고도 원하는 동작을 구현할 수 있다.
+  - 메모리에 저장된 데이터에 접근하기 때문에 데이터베이스에 접근하지 않고도 원하는 동작을 구현할 수 있다.
 
     ![image5](/README_Folder/image/trouble1111_2.png)
 
@@ -229,19 +228,17 @@
 
     - if 문을 이용해 쿼리 존재 유무를 판단할 때 exists() 메서드를 이용하는 것이 좋음
 
-      - 단, 해당 쿼리문을 이하 블럭에서 사용하지 않을 경우 쿼리문을 쓰는 것이 좋음
-
-        ```python
-        # queryset에 접속
-        if query_set:
-          	# queryset에 한 번 더 접속
-          	query_set.get(id=1)
-        
-        # queryset에 접속하지 않음
-        if query_set.exists():
-          	# queryset에 접속
-                query_set.get(id=1)
-        ```
+      ```python
+      # query에 접속
+      if query_set:
+        	# query에 한 번 더 접속
+        	query_set.get(id=1)
+      
+      # query에 접속하지 않음
+      if query_set.exists():
+        	# query에 접속
+          query_set.get(id=1)
+      ```
 
       
 
@@ -304,15 +301,15 @@ def func_b(product_ids):
 
   ![20191210_before](/README_Folder/image/20191210_before.png)
 
-  - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이는 분명함
+  - after: 메모리 측면에서 효율이 떨어지지만, 속도의 차이가 있음
 
   ![20191210_after](/README_Folder/image/20191210_after.png)
 
-  - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있음
+  - 빠른 속도를 제공해야하는 서비스에서는 itertools를 이용하는 것이 더 좋은 성능을 보일 수 있다.
 
-  - 하지만 객체의 수(제품)가 많지 않을 경우 큰 이득을 취할 수 없음
+  - 하지만 객체의 수(제품)가 많지 않을 경우 큰 이득을 취할 수 없다.
 
-  - 메모리 효율에 대해서는 좀 더 조사가 필요함
+  - 메모리 효율에 대해서는 좀 더 조사가 필요하다.
 
     - for문을 이용할 때 메모리 증가치가 0인 이유를 확인하지 못함
 
@@ -484,7 +481,6 @@ def func_b(product_ids):
     print(id(b))  # 4545081528
     ---------------------------------------------------------
     
-```
+    ```
     
-    - 객체를 새로 생성할 때 마다 객체 자체의 정체성은 변하지 않고, 입력된 초기화 값은 반영 되어야 할 경우, 3번을 제외한 나머지는 사용 불가
-
+  - 객체를 새로 생성할 때 마다 객체 자체의 정체성(identity)은 변하지 않고, 입력된 값은 반영 되어야 할 경우, 3번을 제외한 나머지는 사용 불가

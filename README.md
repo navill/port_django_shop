@@ -41,7 +41,7 @@
 
 ### [TroubleShooting](README_Folder/20191106_troubleshooting.md)
 
-- [QuerySet](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#queryset-최적화---1): 반복적인 데이터 베이스 접근을 해결하고 서비스의 성능을 높이기 위한 QuerySet 최적화
+- [Query 최적화](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#queryset-최적화---1): 반복적인 데이터 베이스 접근을 해결하고 서비스의 성능을 높이기 위한 QuerySet 최적화
 
 - [Bulk를 이용한 쿼리문 처리](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#bulk를-이용한-쿼리문-처리): 여러 객체를 한꺼번에 생성하거나 업데이트 해야할 경우 반복문이 아닌 bulk 함수를 이용하여 빠른 성능을 구현
 - [itertools.combinations](https://github.com/navill/port_django_shop/blob/master/README_Folder/20191106_troubleshooting.md#itertoolscombinations을-이용한-조합-생성)을 이용한 조합 생성: 이중 for 문을 이용한 요소 조합이 아닌 최적화된 built-in 함수를 이용하여 중복되지 않는 요소 조합 생성
