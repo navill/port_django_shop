@@ -1,6 +1,6 @@
 # Portfolio: django_shop
 
-**django shop**: http://www.onlineshop.navill.online/
+**Live**: http://www.onlineshop.navill.online/
 
 **PPT**: [Google Drive(PDF)](https://drive.google.com/file/d/1pseR-K55QMxrJqaDQHK2MGOJDZAhoV7g/view?usp=sharing)
 
